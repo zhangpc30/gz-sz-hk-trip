@@ -2,8 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>广深港7日亲子游玩地图 · 一家三口(4岁宝宝)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>广州·顺德·港澳7日亲子吃玩地图（含孙燕姿演唱会）</title>
   <style id="leaflet-inline-css">
 /* required styles */
 
@@ -672,31 +674,36 @@ svg.leaflet-image-layer.leaflet-interactive path {
     :root {
       --bg: #FBF9F5;
       --panel: #FFFFFF;
-      --panel-soft: #F5F1EA;
-      --border: #E7E0D3;
+      --panel-soft: #F4EFE6;
+      --border: #E7DFD1;
       --text: #1F2937;
       --text-muted: #6B7280;
       --gz: #EA580C;
       --gz-soft: #FFF1E6;
-      --sz: #0284C7;
-      --sz-soft: #E0F2FE;
+      --sd: #D97706;
+      --sd-soft: #FEF3C7;
+      --mo: #0D9488;
+      --mo-soft: #CCFBF1;
       --hk: #DB2777;
       --hk-soft: #FCE7F3;
+      --concert: #7C3AED;
+      --concert-soft: #EDE9FE;
       --eat: #F97316;
       --drink: #D97706;
       --play: #10B981;
       --stay: #6366F1;
       --transit: #0EA5E9;
+      --baidu: #2932E1;
       --shadow-sm: 0 2px 8px rgba(31, 41, 55, 0.06);
-      --shadow-md: 0 8px 24px rgba(31, 41, 55, 0.10);
-      --shadow-lg: 0 16px 40px rgba(31, 41, 55, 0.16);
-      --radius: 16px;
+      --shadow-md: 0 8px 24px rgba(31, 41, 55, 0.11);
+      --shadow-lg: 0 16px 38px rgba(31, 41, 55, 0.18);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body {
       width: 100%;
       height: 100%;
+      height: 100dvh;
       overflow: hidden;
       background: var(--bg);
       color: var(--text);
@@ -704,51 +711,53 @@ svg.leaflet-image-layer.leaflet-interactive path {
       -webkit-font-smoothing: antialiased;
     }
 
-    /* 整体框架：顶部导航 + 主体分栏 */
     .app-shell {
       display: flex;
       flex-direction: column;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
     }
 
-    /* 顶部栏 */
+    /* 顶部紧凑标题栏 */
     .top-header {
       background: var(--panel);
       border-bottom: 1px solid var(--border);
-      padding: 10px 18px;
+      padding: max(8px, env(safe-area-inset-top)) 14px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       z-index: 30;
-      box-shadow: var(--shadow-sm);
       flex-shrink: 0;
     }
 
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
     .brand-badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #F97316 0%, #EC4899 55%, #0284C7 100%);
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #EA580C 0%, #7C3AED 55%, #0D9488 100%);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+      box-shadow: 0 3px 10px rgba(124, 58, 237, 0.25);
+    }
+    .brand-titles {
+      min-width: 0;
     }
     .brand-titles h1 {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.25;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -756,168 +765,181 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .brand-sub {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 6px;
+      font-size: 11.5px;
       color: var(--text-muted);
       margin-top: 2px;
-      flex-wrap: wrap;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .pill-mini {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      padding: 1px 7px;
+      padding: 1px 6px;
       border-radius: 999px;
-      font-size: 11px;
-      font-weight: 600;
-      background: #FEF3C7;
-      color: #92400E;
-    }
-
-    /* 日期切换条 */
-    .day-strip-wrap {
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      flex-shrink: 0;
-      z-index: 25;
-    }
-    .day-strip-wrap::-webkit-scrollbar { display: none; }
-
-    .day-tabs {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      flex-shrink: 0;
-    }
-    .day-btn {
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 6px 11px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1px;
-      transition: all 0.2s ease;
-      min-width: 78px;
-      position: relative;
-    }
-    .day-btn:hover {
-      transform: translateY(-1px);
-      border-color: #CBD5E1;
-      background: #fff;
-    }
-    .day-btn .d-top {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      width: 100%;
-      justify-content: space-between;
-    }
-    .day-btn .d-main {
-      font-size: 12.5px;
+      font-size: 10.5px;
       font-weight: 700;
-      white-space: nowrap;
-    }
-    .day-btn.active {
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
-    }
-    .day-btn.active .d-top { color: rgba(255,255,255,0.88); }
-    .day-btn[data-city="ALL"].active { background: linear-gradient(135deg, #334155, #0F172A); }
-    .day-btn[data-city="GZ"].active { background: linear-gradient(135deg, #F97316, #C2410C); }
-    .day-btn[data-city="SZ"].active { background: linear-gradient(135deg, #0EA5E9, #0369A1); }
-    .day-btn[data-city="HK"].active { background: linear-gradient(135deg, #EC4899, #BE185D); }
-
-    .city-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      display: inline-block;
+      background: #EDE9FE;
+      color: #6D28D9;
+      flex-shrink: 0;
     }
 
-    /* 顶部右侧快捷按钮 */
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
     .action-btn {
       border: 1px solid var(--border);
       background: var(--panel-soft);
       color: var(--text);
-      padding: 7px 12px;
+      padding: 6px 10px;
+      min-height: 34px;
       border-radius: 10px;
-      font-size: 12.5px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.18s ease;
-      white-space: nowrap;
-    }
-    .action-btn:hover {
-      background: #EFE9DD;
-    }
-    .action-btn.primary {
-      background: #FFF7ED;
-      border-color: #FDBA74;
-      color: #C2410C;
-    }
-    .action-btn.primary:hover {
-      background: #FFEDD5;
-    }
-
-    /* 类别过滤胶囊组 */
-    .cat-filters {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .cat-chip {
-      border: 1px solid var(--border);
-      background: #fff;
-      color: var(--text-muted);
-      padding: 5px 10px;
-      border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.15s ease;
+      text-decoration: none;
       white-space: nowrap;
+      transition: transform 0.12s ease, background 0.15s ease;
     }
-    .cat-chip:hover { border-color: #94A3B8; color: var(--text); }
+    .action-btn:active { transform: scale(0.96); }
+    .action-btn.hotel-btn {
+      background: #EEF2FF;
+      border-color: #C7D2FE;
+      color: #4338CA;
+    }
+    .action-btn.check-btn {
+      background: #FFF7ED;
+      border-color: #FDBA74;
+      color: #C2410C;
+    }
+
+    /* 日期横滑条 + 类别过滤 */
+    .day-strip-wrap {
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+      z-index: 25;
+    }
+
+    .day-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      min-width: 0;
+    }
+    .day-tabs::-webkit-scrollbar { display: none; }
+
+    .day-btn {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      border-radius: 11px;
+      padding: 5px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      transition: all 0.18s ease;
+      min-width: 74px;
+      flex-shrink: 0;
+    }
+    .day-btn:active { transform: scale(0.96); }
+    .day-btn .d-top {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      width: 100%;
+    }
+    .day-btn .d-main {
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .day-btn.active {
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    }
+    .day-btn.active .d-top { color: rgba(255,255,255,0.88); }
+    .day-btn[data-city="ALL"].active { background: linear-gradient(135deg, #334155, #0F172A); }
+    .day-btn[data-city="GZ"].active { background: linear-gradient(135deg, #EA580C, #C2410C); }
+    .day-btn[data-city="CONCERT"].active { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
+    .day-btn[data-city="SD"].active { background: linear-gradient(135deg, #F59E0B, #B45309); }
+    .day-btn[data-city="MO"].active { background: linear-gradient(135deg, #14B8A6, #0F766E); }
+    .day-btn[data-city="HK"].active { background: linear-gradient(135deg, #EC4899, #BE185D); }
+
+    .city-dot {
+      width: 6.5px;
+      height: 6.5px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .cat-filters {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      flex-shrink: 0;
+    }
+    .cat-filters::-webkit-scrollbar { display: none; }
+    .cat-chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text-muted);
+      padding: 4px 9px;
+      min-height: 28px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     .cat-chip.active {
       background: #1F2937;
       color: #fff;
       border-color: #1F2937;
     }
 
-    /* 主体区：左时间轴列表 + 右交互地图 */
+    /* 主体区域 */
     .main-stage {
       flex: 1;
       display: flex;
       min-height: 0;
       position: relative;
+      overflow: hidden;
     }
 
     .sidebar {
@@ -930,11 +952,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       min-height: 0;
       z-index: 20;
       flex-shrink: 0;
+      transition: height 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* 当日摘要横幅 */
     .day-hero {
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: var(--panel);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
@@ -944,83 +966,84 @@ svg.leaflet-image-layer.leaflet-interactive path {
       align-items: center;
       justify-content: space-between;
       gap: 8px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .city-badge {
-      font-size: 11.5px;
-      font-weight: 700;
-      padding: 2px 9px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
       border-radius: 999px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
     }
     .city-GZ { background: var(--gz-soft); color: var(--gz); }
-    .city-SZ { background: var(--sz-soft); color: var(--sz); }
+    .city-CONCERT { background: var(--concert-soft); color: var(--concert); }
+    .city-SD { background: var(--sd-soft); color: #B45309; }
+    .city-MO { background: var(--mo-soft); color: #0F766E; }
     .city-HK { background: var(--hk-soft); color: var(--hk); }
     .city-ALL { background: #EEF2FF; color: #4338CA; }
 
     .day-weather {
-      font-size: 11.5px;
+      font-size: 11px;
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-weight: 600;
     }
     .day-hero h2 {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
     .day-hero p {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.48;
     }
     .baby-pace-bar {
-      margin-top: 9px;
+      margin-top: 8px;
       padding: 7px 10px;
       border-radius: 10px;
       background: #FEFCE8;
       border: 1px solid #FDE68A;
-      font-size: 12px;
+      font-size: 11.5px;
       color: #854D0E;
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
       line-height: 1.45;
     }
+    .baby-pace-bar.concert-bar {
+      background: #F5F3FF;
+      border-color: #DDD6FE;
+      color: #5B21B6;
+    }
 
-    /* 时间轴卡片滚动区 */
     .timeline-list {
       flex: 1;
       overflow-y: auto;
-      padding: 14px 14px 28px;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 12px calc(76px + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 10px;
     }
 
     .spot-card {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
+      border-radius: 15px;
+      padding: 12px 13px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.18s, box-shadow 0.18s;
       box-shadow: var(--shadow-sm);
-      position: relative;
-    }
-    .spot-card:hover {
-      border-color: #CBD5E1;
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
     }
     .spot-card.selected {
-      border-color: #F97316;
-      box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.18), var(--shadow-md);
-      background: #FFFDFB;
+      border-color: #2932E1;
+      box-shadow: 0 0 0 2px rgba(41, 50, 225, 0.15), var(--shadow-md);
+      background: #FAFBFF;
+    }
+    .spot-card.concert-card {
+      border-color: #C4B5FD;
+      background: linear-gradient(180deg, #FAF8FF 0%, #FFFFFF 100%);
     }
 
     .spot-top {
@@ -1033,15 +1056,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .spot-seq-wrap {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       min-width: 0;
     }
     .seq-num {
-      width: 23px;
-      height: 23px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       color: #fff;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       display: inline-flex;
       align-items: center;
@@ -1050,7 +1073,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
     .spot-time {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-muted);
       font-variant-numeric: tabular-nums;
     }
@@ -1064,25 +1087,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .cat-eat { background: #FFEDD5; color: #C2410C; }
     .cat-drink { background: #FEF3C7; color: #B45309; }
     .cat-play { background: #D1FAE5; color: #047857; }
+    .cat-concert { background: #EDE9FE; color: #6D28D9; }
     .cat-stay { background: #E0E7FF; color: #4338CA; }
     .cat-transit { background: #E0F2FE; color: #0369A1; }
 
     .spot-title {
       font-size: 14.5px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text);
       margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      line-height: 1.3;
     }
     .spot-desc {
       font-size: 12.5px;
       color: #4B5563;
-      line-height: 1.52;
+      line-height: 1.5;
       margin-bottom: 8px;
     }
-
     .kid-highlight {
       background: #F8FAFC;
       border-left: 3px solid #F59E0B;
@@ -1090,59 +1111,78 @@ svg.leaflet-image-layer.leaflet-interactive path {
       padding: 6px 9px;
       font-size: 12px;
       color: #334155;
-      line-height: 1.45;
-      margin-bottom: 8px;
+      line-height: 1.46;
+      margin-bottom: 9px;
     }
-    .kid-highlight strong {
-      color: #B45309;
+    .concert-card .kid-highlight {
+      background: #F5F3FF;
+      border-left-color: #7C3AED;
+      color: #4C1D95;
     }
 
-    .spot-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding-top: 6px;
-      border-top: 1px dashed #E5E7EB;
-      font-size: 11.5px;
-      color: var(--text-muted);
-    }
     .meta-tags {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       flex-wrap: wrap;
+      margin-bottom: 9px;
     }
     .meta-pill {
       background: var(--panel-soft);
+      color: #57534E;
       padding: 2px 7px;
       border-radius: 6px;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav-link {
-      text-decoration: none;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 600;
-      color: #0284C7;
-      padding: 2px 7px;
-      border-radius: 6px;
-      background: #F0F9FF;
-      transition: background 0.15s;
     }
-    .nav-link:hover { background: #E0F2FE; }
 
-    /* 右侧地图区域 */
+    /* 手机大触控按钮行：百度地图优先 */
+    .card-nav-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 1px dashed #E5E7EB;
+    }
+    .nav-btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 36px;
+      padding: 0 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-btn:active { transform: scale(0.97); }
+    .nav-btn.baidu-primary {
+      background: #2932E1;
+      color: #fff;
+    }
+    .nav-btn.baidu-route {
+      background: #EEF2FF;
+      color: #2932E1;
+      border: 1px solid #C7D2FE;
+    }
+    .nav-btn.locate-btn {
+      background: var(--panel-soft);
+      color: var(--text);
+      padding: 0 11px;
+    }
+
+    /* 右侧地图区 */
     .map-pane {
       flex: 1;
       position: relative;
       background: #E6F0F5;
       min-width: 0;
       min-height: 0;
+      transition: height 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     }
     #leaflet-map, #svg-map-container {
       position: absolute;
@@ -1157,94 +1197,77 @@ svg.leaflet-image-layer.leaflet-interactive path {
       user-select: none;
     }
 
-    /* 地图悬浮控制栏 */
     .map-floating-controls {
       position: absolute;
-      top: 14px;
-      right: 14px;
+      top: 10px;
+      right: 10px;
       z-index: 600;
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
+      align-items: center;
+      gap: 6px;
     }
     .layer-switcher {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 4px;
+      border-radius: 11px;
+      padding: 3px;
       display: flex;
-      gap: 4px;
+      gap: 3px;
       box-shadow: var(--shadow-md);
     }
     .layer-btn {
       border: none;
       background: transparent;
       color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 5px 9px;
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.15s;
       white-space: nowrap;
     }
     .layer-btn.active {
       background: #1F2937;
       color: #fff;
     }
-
-    .map-quick-tools {
-      display: flex;
-      gap: 6px;
-    }
-    .float-pill-btn {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
+    .center-fab {
+      width: 34px;
+      height: 34px;
       border-radius: 10px;
-      padding: 6px 11px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
-    .float-pill-btn:hover { background: #fff; }
-
-    /* 左下角图例 */
-    .map-legend {
-      position: absolute;
-      bottom: 18px;
-      left: 14px;
-      z-index: 600;
+      border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(10px);
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-legend {
+      position: absolute;
+      bottom: 14px;
+      left: 10px;
+      z-index: 600;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 12px;
+      border-radius: 10px;
+      padding: 6px 10px;
       box-shadow: var(--shadow-sm);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      font-size: 11.5px;
+      font-size: 11px;
       color: var(--text);
     }
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-weight: 600;
-    }
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
+    .legend-item { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    /* 自定义 Leaflet Marker 样式 */
+    /* 自定义气泡 Marker */
     .custom-pin-wrap {
       position: relative;
       display: flex;
@@ -1257,304 +1280,332 @@ svg.leaflet-image-layer.leaflet-interactive path {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 9px 4px 5px;
+      padding: 4px 8px 4px 5px;
       border-radius: 999px;
       color: #fff;
-      font-weight: 700;
-      font-size: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.24);
+      font-weight: 800;
+      font-size: 11.5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
       border: 2px solid #fff;
       white-space: nowrap;
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pin-bubble.hotel-pin {
+      background: linear-gradient(135deg, #4F46E5, #312E81) !important;
+      border-color: #FDE047;
+      padding: 4px 9px;
     }
     .pin-bubble .pin-seq {
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.28);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
     }
     .pin-arrow {
       width: 0;
       height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 7px solid #fff;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #fff;
       margin-top: -1px;
-      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.18));
     }
-    .custom-pin-wrap:hover .pin-bubble,
     .custom-pin-wrap.active .pin-bubble {
-      transform: scale(1.14) translateY(-2px);
-      z-index: 999 !important;
+      transform: scale(1.16) translateY(-2px);
     }
     .custom-pin-wrap.active::after {
       content: "";
       position: absolute;
-      bottom: -5px;
-      width: 18px;
-      height: 8px;
+      bottom: -4px;
+      width: 16px;
+      height: 7px;
       border-radius: 50%;
-      background: rgba(249, 115, 22, 0.45);
-      animation: pulseRing 1.5s infinite;
+      background: rgba(41, 50, 225, 0.45);
+      animation: pulseRing 1.4s infinite;
     }
     @keyframes pulseRing {
       0% { transform: scale(0.8); opacity: 0.9; }
-      100% { transform: scale(2.2); opacity: 0; }
+      100% { transform: scale(2.3); opacity: 0; }
     }
 
-    /* Leaflet Popup 美化 */
+    /* Popup 美化 */
     .leaflet-popup-content-wrapper {
       border-radius: 15px !important;
       box-shadow: var(--shadow-lg) !important;
-      padding: 2px !important;
+      padding: 1px !important;
     }
     .leaflet-popup-content {
-      margin: 12px 14px !important;
-      width: 280px !important;
+      margin: 11px 12px !important;
+      width: min(275px, 74vw) !important;
       font-family: inherit !important;
     }
-    .pop-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-    .pop-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: #111827;
-      margin-bottom: 5px;
-    }
-    .pop-desc {
-      font-size: 12.5px;
-      color: #4B5563;
-      line-height: 1.5;
-      margin-bottom: 8px;
-    }
-    .pop-kid {
-      background: #FFFBEB;
-      border: 1px solid #FDE68A;
-      border-radius: 8px;
-      padding: 6px 8px;
-      font-size: 12px;
-      color: #92400E;
-      line-height: 1.45;
-      margin-bottom: 9px;
-    }
-    .pop-actions {
-      display: flex;
-      gap: 6px;
-    }
+    .pop-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 5px; }
+    .pop-title { font-size: 14.5px; font-weight: 800; color: #111827; margin-bottom: 4px; }
+    .pop-desc { font-size: 12px; color: #4B5563; line-height: 1.48; margin-bottom: 7px; }
+    .pop-kid { background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 6px 8px; font-size: 11.5px; color: #92400E; line-height: 1.44; margin-bottom: 8px; }
+    .pop-actions { display: flex; gap: 6px; }
     .pop-btn {
       flex: 1;
       text-align: center;
       text-decoration: none;
-      padding: 6px 8px;
-      border-radius: 8px;
+      padding: 8px 6px;
+      border-radius: 9px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
     }
-    .pop-btn.amap { background: #0284C7; color: #fff; }
-    .pop-btn.apple { background: #F3F4F6; color: #1F2937; }
+    .pop-btn.baidu { background: #2932E1; color: #fff; }
+    .pop-btn.route { background: #EEF2FF; color: #2932E1; border: 1px solid #C7D2FE; }
 
-    /* 4岁带娃百宝箱 Modal */
+    /* 手机端底部三档切换悬浮胶囊（仅 <= 860px 显示） */
+    .mobile-mode-dock {
+      display: none;
+    }
+
+    /* 弹窗 */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.48);
+      background: rgba(15, 23, 42, 0.5);
       backdrop-filter: blur(4px);
       z-index: 2000;
       display: none;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      padding: 16px;
+      padding: 0;
     }
     .modal-backdrop.open { display: flex; }
     .modal-card {
       background: #fff;
-      border-radius: 20px;
+      border-radius: 22px 22px 0 0;
       width: 100%;
       max-width: 680px;
-      max-height: 86vh;
+      max-height: 85dvh;
       display: flex;
       flex-direction: column;
       box-shadow: var(--shadow-lg);
       overflow: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    @media (min-width: 720px) {
+      .modal-backdrop { align-items: center; padding: 16px; }
+      .modal-card { border-radius: 20px; }
     }
     .modal-header {
-      padding: 16px 20px;
+      padding: 15px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: #FFFBF5;
     }
-    .modal-header h3 { font-size: 17px; font-weight: 800; }
+    .modal-header h3 { font-size: 16px; font-weight: 800; }
     .close-btn {
       border: none;
       background: #F3F4F6;
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       font-size: 16px;
       cursor: pointer;
     }
     .modal-body {
-      padding: 18px 20px 24px;
+      padding: 14px 16px 24px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
     }
     .guide-box {
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 13px 14px;
+      padding: 12px 13px;
       background: var(--bg);
     }
-    .guide-box h4 {
-      font-size: 14px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .guide-box h4 { font-size: 13.5px; font-weight: 800; margin-bottom: 8px; }
     .check-item {
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 9px;
       font-size: 12.5px;
       line-height: 1.48;
       color: #374151;
-      padding: 4px 0;
+      padding: 5px 0;
       cursor: pointer;
     }
     .check-item input {
-      margin-top: 3px;
-      accent-color: #EA580C;
-      cursor: pointer;
+      width: 17px;
+      height: 17px;
+      margin-top: 2px;
+      accent-color: #2932E1;
+      flex-shrink: 0;
     }
-    .check-item.done span {
-      text-decoration: line-through;
-      color: #9CA3AF;
-    }
+    .check-item.done span { text-decoration: line-through; color: #9CA3AF; }
 
-    /* 响应式移动端适配：上半屏地图 + 下半屏列表 */
+    /* ==========================================
+       手机端专属深度优化布局 (<= 860px)
+       ========================================== */
     @media (max-width: 860px) {
-      .top-header { padding: 8px 12px; }
-      .brand-titles h1 { font-size: 14.5px; }
-      .brand-sub .hide-sm { display: none; }
-      .day-strip-wrap { padding: 7px 12px; flex-direction: column; align-items: stretch; gap: 7px; }
-      .day-tabs, .cat-filters { overflow-x: auto; scrollbar-width: none; }
-      .day-tabs::-webkit-scrollbar, .cat-filters::-webkit-scrollbar { display: none; }
-      .main-stage { flex-direction: column-reverse; }
-      .sidebar {
-        width: 100%;
-        height: 52%;
-        border-right: none;
-        border-top: 1px solid var(--border);
-      }
-      .map-pane { height: 48%; }
-      .map-legend { bottom: 8px; left: 8px; padding: 5px 8px; font-size: 10.5px; gap: 6px; }
-      .day-hero { padding: 10px 12px; }
-      .day-hero h2 { font-size: 14.5px; }
-    }
+      .top-header { padding: max(6px, env(safe-area-inset-top)) 10px 6px; gap: 6px; }
+      .brand-badge { width: 32px; height: 32px; font-size: 16px; border-radius: 9px; }
+      .brand-titles h1 { font-size: 14px; }
+      .brand-sub { font-size: 11px; }
+      .hide-sm { display: none !important; }
+      .action-btn { padding: 5px 8px; font-size: 11.5px; min-height: 32px; }
 
-    @media print {
-      html, body, .app-shell, .main-stage, .sidebar, .timeline-list {
-        height: auto !important;
-        overflow: visible !important;
-        display: block !important;
+      .day-strip-wrap {
+        padding: 6px 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
       }
-      .sidebar { width: 100% !important; border: none !important; }
-      .map-pane, .header-actions, .cat-filters { display: none !important; }
-      .spot-card { break-inside: avoid; margin-bottom: 10px; }
+      .day-btn { min-width: 68px; padding: 4px 8px; border-radius: 10px; }
+      .day-btn .d-top { font-size: 10px; }
+      .day-btn .d-main { font-size: 11.5px; }
+
+      .main-stage {
+        flex-direction: column-reverse;
+      }
+
+      /* 手机三档视图状态 */
+      .main-stage.mode-split .map-pane { height: 42%; flex: none; }
+      .main-stage.mode-split .sidebar { width: 100%; height: 58%; border-right: none; border-top: 1px solid var(--border); }
+
+      .main-stage.mode-map .map-pane { height: 84%; flex: none; }
+      .main-stage.mode-map .sidebar { width: 100%; height: 16%; border-right: none; border-top: 1px solid var(--border); }
+      .main-stage.mode-map .day-hero p,
+      .main-stage.mode-map .baby-pace-bar,
+      .main-stage.mode-map .timeline-list { display: none; }
+
+      .main-stage.mode-list .map-pane { height: 0%; flex: none; overflow: hidden; }
+      .main-stage.mode-list .sidebar { width: 100%; height: 100%; border-right: none; border-top: none; }
+
+      .day-hero { padding: 9px 12px; }
+      .day-hero h2 { font-size: 14px; }
+      .map-legend { display: none; }
+
+      .card-nav-row {
+        grid-template-columns: 1fr 1fr auto;
+      }
+
+      .mobile-mode-dock {
+        display: flex;
+        position: fixed;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1200;
+        background: rgba(17, 24, 39, 0.92);
+        backdrop-filter: blur(12px);
+        padding: 4px;
+        border-radius: 999px;
+        gap: 4px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      }
+      .dock-btn {
+        border: none;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 7px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .dock-btn.active {
+        background: #fff;
+        color: #111827;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <!-- 顶栏 -->
+    <!-- 顶部栏 -->
     <header class="top-header">
       <div class="brand-group">
-        <div class="brand-badge">👨‍👩‍👧</div>
+        <div class="brand-badge">🎤</div>
         <div class="brand-titles">
-          <h1>广深港 7 日暖冬亲子游玩地图</h1>
+          <h1>广州·顺德·港澳 7 日吃玩地图</h1>
           <div class="brand-sub">
-            <span>📅 11月29日(周日) — 12月5日(周六)</span>
-            <span class="pill-mini">👶 4岁宝宝友好 · 少换酒店(2+2+2晚)</span>
-            <span class="hide-sm">🌡️ 14℃~23℃ 洋葱式穿搭</span>
+            <span>🏨 住广州粤海喜来登</span>
+            <span class="pill-mini">🎤 11.29 &amp; 12.4 孙燕姿</span>
+            <span class="hide-sm">👶 4岁亲子 · 百度地图导航</span>
           </div>
         </div>
       </div>
       <div class="header-actions">
-        <button class="action-btn primary" onclick="toggleChecklistModal(true)">
-          🎒 4岁带娃行前清单 <span id="check-progress">(0/12)</span>
-        </button>
-        <button class="action-btn" onclick="fitCurrentView()" title="回到当前行程最佳视野">
-          🎯 居中视野
+        <a class="action-btn hotel-btn" id="btn-back-hotel" href="#" target="_blank" rel="noopener" title="百度地图一键导航回广州粤海喜来登酒店">
+          🏨 回喜来登
+        </a>
+        <button class="action-btn check-btn" onclick="toggleChecklistModal(true)">
+          🎒 清单 <span id="check-progress">(0/12)</span>
         </button>
       </div>
     </header>
 
-    <!-- 日期切换与吃喝玩筛选 -->
+    <!-- 日期横滑 + 吃喝玩过滤 -->
     <div class="day-strip-wrap">
       <div class="day-tabs" id="day-tabs"></div>
       <div class="cat-filters" id="cat-filters">
         <button class="cat-chip active" data-cat="ALL" onclick="setCategory('ALL')">✨ 全部</button>
-        <button class="cat-chip" data-cat="eat" onclick="setCategory('eat')">🥟 去哪吃</button>
-        <button class="cat-chip" data-cat="drink" onclick="setCategory('drink')">🧋 去哪喝</button>
-        <button class="cat-chip" data-cat="play" onclick="setCategory('play')">🎡 去哪玩</button>
-        <button class="cat-chip" data-cat="stay" onclick="setCategory('stay')">🏨 住&行</button>
+        <button class="cat-chip" data-cat="eat" onclick="setCategory('eat')">🥟 吃</button>
+        <button class="cat-chip" data-cat="drink" onclick="setCategory('drink')">🧋 喝</button>
+        <button class="cat-chip" data-cat="play" onclick="setCategory('play')">🎡 玩&amp;🎤</button>
+        <button class="cat-chip" data-cat="stay" onclick="setCategory('stay')">🏨 住&amp;行</button>
       </div>
     </div>
 
-    <!-- 主内容区 -->
-    <div class="main-stage">
-      <!-- 左侧时间轴面板 -->
+    <!-- 主内容舞台 -->
+    <div class="main-stage mode-split" id="main-stage">
+      <!-- 左侧/下方行程时间轴 -->
       <aside class="sidebar">
         <div class="day-hero" id="day-hero"></div>
         <div class="timeline-list" id="timeline-list"></div>
       </aside>
 
-      <!-- 右侧双引擎地图面板 -->
+      <!-- 右侧/上方双引擎交互地图 -->
       <section class="map-pane">
         <div id="leaflet-map"></div>
         <div id="svg-map-container"></div>
 
-        <!-- 右上角底图切换器 -->
         <div class="map-floating-controls">
           <div class="layer-switcher">
-            <button class="layer-btn active" id="btn-layer-amap" onclick="switchMapMode('amap')">🗺️ 中文街道图</button>
-            <button class="layer-btn" id="btn-layer-carto" onclick="switchMapMode('carto')">🌍 清新国际图</button>
-            <button class="layer-btn" id="btn-layer-svg" onclick="switchMapMode('svg')">🎨 手绘导览图</button>
+            <button class="layer-btn active" id="btn-layer-cn" onclick="switchMapMode('cn')">🗺️ 中文地图</button>
+            <button class="layer-btn" id="btn-layer-intl" onclick="switchMapMode('intl')">🌍 国际图</button>
+            <button class="layer-btn" id="btn-layer-svg" onclick="switchMapMode('svg')">🎨 手绘图</button>
           </div>
+          <button class="center-fab" onclick="fitCurrentView()" title="居中视野">🎯</button>
         </div>
 
-        <!-- 左下角图例 -->
         <div class="map-legend">
-          <span class="legend-item"><i class="legend-dot" style="background:var(--eat)"></i>🥟 吃正餐/早茶</span>
-          <span class="legend-item"><i class="legend-dot" style="background:var(--drink)"></i>🧋 喝糖水/茶饮</span>
-          <span class="legend-item"><i class="legend-dot" style="background:var(--play)"></i>🎡 玩乐园/景点</span>
-          <span class="legend-item"><i class="legend-dot" style="background:var(--stay)"></i>🏨 连住酒店圈</span>
-          <span class="legend-item"><i class="legend-dot" style="background:var(--transit)"></i>🚄 高铁/渡轮</span>
+          <span class="legend-item"><i class="legend-dot" style="background:#4F46E5"></i>🏨 喜来登大本营</span>
+          <span class="legend-item"><i class="legend-dot" style="background:var(--concert)"></i>🎤 孙燕姿演唱会</span>
+          <span class="legend-item"><i class="legend-dot" style="background:var(--eat)"></i>🥟 美食</span>
+          <span class="legend-item"><i class="legend-dot" style="background:var(--drink)"></i>🧋 糖水茶饮</span>
+          <span class="legend-item"><i class="legend-dot" style="background:var(--play)"></i>🎡 亲子玩乐</span>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- 4岁宝宝出行清单与避坑弹窗 -->
+  <!-- 手机端底部三档视图快速切换胶囊 -->
+  <nav class="mobile-mode-dock" aria-label="手机视图切换">
+    <button class="dock-btn" id="dock-map" onclick="setMobileView('map')">🗺️ 大地图</button>
+    <button class="dock-btn active" id="dock-split" onclick="setMobileView('split')">🔀 分屏</button>
+    <button class="dock-btn" id="dock-list" onclick="setMobileView('list')">📋 看行程</button>
+  </nav>
+
+  <!-- 4岁宝宝+演唱会行前清单 -->
   <div class="modal-backdrop" id="checklist-modal" onclick="if(event.target===this)toggleChecklistModal(false)">
     <div class="modal-card">
       <div class="modal-header">
-        <h3>🎒 一家三口（4岁宝宝）广深港行前百宝箱</h3>
+        <h3>🎒 4岁亲子 + 两场孙燕姿演唱会行前清单</h3>
         <button class="close-btn" onclick="toggleChecklistModal(false)">✕</button>
       </div>
       <div class="modal-body" id="checklist-body"></div>
@@ -1571,486 +1622,454 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </script>
   <script>
     // ==========================================
-    // 1. 七天六晚完整行程与精准 WGS-84 坐标数据
+    // 1. 固定大本营：广州粤海喜来登酒店 (WGS-84)
+    // ==========================================
+    const HOTEL_BASE = {
+      name: "广州粤海喜来登酒店",
+      address: "广州市天河区天河路208号（天河城正上方·体育西路地铁C口）",
+      lat: 23.1319,
+      lng: 113.3216
+    };
+
+    // ==========================================
+    // 2. 7 天完整吃喝玩 + 两场演唱会 + 顺德/港澳一日行程
     // ==========================================
     const DAYS_META = [
       {
-        id: "ALL",
-        shortLabel: "全景总览",
-        dateStr: "11/29 - 12/5",
-        city: "ALL",
-        cityName: "广州 ➔ 深圳 ➔ 香港",
-        weather: "🌤️ 14℃~23℃ 晴爽微风",
-        title: "粤港澳大湾区 7 天 6 晚顺向不折腾环线",
-        summary: "专为 4 岁宝宝定制「广州2晚 + 深圳2晚 + 香港2晚」黄金节奏：全程顺向南下不走回头路，只换 2 次酒店，精准避开周一/周二场馆闭馆日与周末乐园大客流。",
-        babyTip: "💡 点击上方 D1~D7 标签可逐天查看详细吃喝玩乐时间轴与连线轨迹；点击任意卡片即可在地图定位并一键唤起手机导航。"
+        id: "ALL", shortLabel: "全景总览", dateStr: "11/29-12/5", city: "ALL",
+        cityName: "广州喜来登大本营 ➔ 顺德 · 澳门 · 香港",
+        weather: "🌤️ 14℃~23℃",
+        title: "广州顺德深度吃玩 + 两场孙燕姿 + 港澳各一日环线",
+        summary: "以【广州粤海喜来登酒店】为超级大本营免搬行李！11.29 与 12.4 两晚锁死奥体中心孙燕姿演唱会，中间畅玩长隆、顺德美食之都，澳门和香港各自轻松一日游（深圳顺路可选）。",
+        babyTip: "💡 地图上点击任意气泡或下方按钮，均可一键唤起【百度地图导航】或直接规划【从喜来登出发】的地铁/打车路线！",
+        isConcert: false
       },
       {
-        id: "D1",
-        shortLabel: "D1 周日",
-        dateStr: "11月29日",
-        city: "GZ",
-        cityName: "广州 · 荔湾/珠江新城",
+        id: "D1", shortLabel: "D1 🎤演唱", dateStr: "11/29 周日", city: "CONCERT",
+        cityName: "广州天河 · 奥体中心",
         weather: "🌤️ 14℃~22℃",
-        title: "Day 1 · 抵达广州：西关骑楼早茶、沙面古榕与珠江夜色",
-        summary: "首日轻松慢节奏开启岭南美食之旅！下午逛全平路无台阶的永庆坊看锦鲤、沙面岛大榕树草坪跑跳，晚上看小蛮腰七彩灯光。",
-        babyTip: "👶 4岁节奏贴士：连住珠江新城地铁3号线沿线2晚（去老城区和明天去长隆都免搬行李）；沙面岛全平路极好推婴儿车。"
+        title: "Day 1 · 入住喜来登喝茶 ➔ 孙燕姿《就在日落以后》首场！",
+        summary: "抵达即住进天河城正上方的粤海喜来登，下楼吃正宗陶陶居早午茶，下午给 4 岁娃回房睡饱午觉，傍晚赴奥体中心开启青春大合唱！",
+        babyTip: "🎤 4岁看演唱会必看：务必给宝宝戴上【儿童防噪隔音耳罩】保护听力！晚间体育场有微风，备一件防风外套。",
+        isConcert: true
       },
       {
-        id: "D2",
-        shortLabel: "D2 周一",
-        dateStr: "11月30日",
-        city: "GZ",
-        cityName: "广州 · 番禺长隆",
+        id: "D2", shortLabel: "D2 长隆", dateStr: "11/30 周一", city: "GZ",
+        cityName: "广州番禺 · 长隆",
         weather: "☀️ 13℃~22℃",
-        title: "Day 2 · 广州长隆野生动物世界奇妙日（周一错峰不排队！）",
-        summary: "周一完美避开周末人潮与市内博物馆闭馆日！北门入园坐森林小火车穿越散养猛兽草食区，下午亲手喂长颈鹿、看熊猫三胞胎与呆萌考拉。",
-        babyTip: "👶 4岁节奏贴士：必带轻便伞车或在北门租推车；中午在熊猫餐厅吹空调吃午饭，让宝宝在推车里睡40分钟午觉，下午元气满满。"
+        title: "Day 2 · 广州长隆野生动物世界（周一错峰王炸！）",
+        summary: "昨晚看演唱会今天睡到自然醒！喜来登楼下体育西路坐地铁 3 号线一线直达长隆，避开周日大客流，坐小火车、喂长颈鹿、看熊猫三胞胎！",
+        babyTip: "👶 4岁省妈贴士：北门入园先租推车或自带伞车；坐森林小火车选【右侧靠窗位】，中午熊猫餐厅吹空调吃午饭顺便午睡充电。",
+        isConcert: false
       },
       {
-        id: "D3",
-        shortLabel: "D3 周二",
-        dateStr: "12月1日",
-        city: "SZ",
-        cityName: "广州 🚄 深圳福田",
-        weather: "🌤️ 16℃~23℃",
-        title: "Day 3 · 广式早茶收官 ➔ 29分钟高铁抵深 ➔ 儿童探索馆放电",
-        summary: "睡到自然醒喝完早茶，乘高铁眨眼即达深圳。午睡后去周二正常开放的「深圳妇儿大厦儿童探索馆」角色扮演，晚上炫清甜海南椰子鸡！",
-        babyTip: "👶 4岁节奏贴士：妇儿大厦周一闭馆、周二开至20:00！一楼玩水区虽有防水罩，建议给4岁娃包里塞一件薄打底衫备换。"
+        id: "D3", shortLabel: "D3 顺德", dateStr: "12/01 周二", city: "SD",
+        cityName: "佛山 · 顺德大良",
+        weather: "☀️ 15℃~23℃",
+        title: "Day 3 · 世界美食之都顺德：清晖园 + 双皮奶 + 摩天轮 + 毋米粥",
+        summary: "大件行李留喜来登轻装出发！上午清晖园看满池锦鲤、逛金榜上街吃水牛奶双皮奶，下午欢乐海岸 PLUS 遛娃坐摩天轮，晚上炫顺德鼻祖太艮堡毋米粥！",
+        babyTip: "🍲 4岁吃喝红黑榜：毋米粥、温热双皮奶、软米煲仔饭宝宝狂爱！顺德鱼生大人尝鲜即可，切勿给 4 岁宝宝吃生鱼片哦。",
+        isConcert: false
       },
       {
-        id: "D4",
-        shortLabel: "D4 周三",
-        dateStr: "12月2日",
-        city: "SZ",
-        cityName: "深圳 · 深圳湾/宝安",
-        weather: "☀️ 16℃~23℃",
-        title: "Day 4 · 深圳湾12月限定海鸥季 &「湾区之光」摩天轮海上落日",
-        summary: "出地铁站50米直面大海与成群越冬海鸥！下午睡饱后去欢乐港湾免费无动力童乐园挖沙，傍晚推车直入太空舱摩天轮看金色日落。",
-        babyTip: "👶 4岁节奏贴士：上午9:30-11:00深圳湾海鸥最多且阳光柔和不晒；摩天轮轿厢超宽敞，婴儿推车无需折叠可直接推进去。"
+        id: "D4", shortLabel: "D4 澳门", dateStr: "12/02 周三", city: "MO",
+        cityName: "澳门 · 半岛+路氹",
+        weather: "🌤️ 15℃~22℃",
+        title: "Day 4 · 澳门精华一日游（最多一天 · 轻装当天往返）",
+        summary: "早班城轨广州南 ➔ 珠海拱北口岸丝滑过关！上午大三巴+玛嘉烈蛋挞，下午全室内恒温威尼斯人大运河+伦敦人+官也街吃手信，傍晚免费发财车回拱北返穗！",
+        babyTip: "🛂 通关贴士：4岁宝宝未满7岁需走人工通道并留好过关小白条；大三巴走旁侧澳门博物馆电梯直达大炮台，免爬长楼梯！",
+        isConcert: false
       },
       {
-        id: "D5",
-        shortLabel: "D5 周四",
-        dateStr: "12月3日",
-        city: "HK",
-        cityName: "深圳 🚄 香港尖沙咀/中环",
+        id: "D5", shortLabel: "D5 港/深", dateStr: "12/03 周四", city: "HK",
+        cityName: "香港一日（顺路深圳）",
         weather: "🌤️ 15℃~21℃",
-        title: "Day 5 · 14分钟高铁抵港：K11乐高王国 + 百年天星小轮渡维港",
-        summary: "西九龙同站丝滑「一地两检」入港！吃酸甜开胃的华嫂番茄通粉，下午逛室内乐高探索中心，傍晚坐天星小轮+20港币中环摩天轮吃富豪雪糕。",
-        babyTip: "👶 4岁节奏贴士：香港商场与渡轮空调偏凉，随身备一件薄针织开衫或防风马甲；K11 MUSEA 拥有全港顶配亲子母婴室。"
+        title: "Day 5 · 香港精华一日游（广州东直达西九龙 · 顺路深圳彩蛋）",
+        summary: "从喜来登打车 10 分钟到广州东站坐直通高铁抵西九龙！吃华嫂番茄通粉、逛 K11 乐高/维港、坐天星小轮 + HK$20 摩天轮 + 叮叮车；回程路过深圳还可下车吃椰子鸡！",
+        babyTip: "💡 体力弹性提示：如连去港澳两天太累，今天可改成【深圳轻松半日：深圳湾看12月越冬海鸥 + 润园四季椰子鸡】再返穗！",
+        isConcert: false
       },
       {
-        id: "D6",
-        shortLabel: "D6 周五",
-        dateStr: "12月4日",
-        city: "HK",
-        cityName: "香港 · 大屿山迪士尼",
-        weather: "☀️ 15℃~20℃",
-        title: "Day 6 · 香港迪士尼乐园「A Disney Christmas」圣诞漫天飘雪日",
-        summary: "周五错峰畅玩魔雪奇缘世界圣诞冬日市集，跟戴圣诞帽的小白互动，刷遍幻想世界零身高门槛童话项目，傍晚看无人机圣诞树亮灯与漫天飘雪！",
-        babyTip: "👶 4岁节奏贴士：幻想世界「小小世界」坐船15分钟是绝佳回血歇脚点；若娃累了看完18:15亮灯飘雪即可错峰出园，体力好再留看20:30城堡烟花。"
+        id: "D6", shortLabel: "D6 🎤二刷", dateStr: "12/04 周五", city: "CONCERT",
+        cityName: "广州西关 ➔ 奥体中心",
+        weather: "☀️ 14℃~22℃",
+        title: "Day 6 · 老西关园林早茶 & 沙面慢游 ➔ 孙燕姿二刷狂欢夜！",
+        summary: "今天全天不出广州、不赶车！上午泮溪酒家园林喝茶、永庆坊看鱼、沙面大榕树草坪晒太阳，下午回喜来登舒舒服服午睡，晚上二刷孙燕姿！",
+        babyTip: "🎤 二刷攻略：喜来登楼下地铁 1 号线直达老西关超方便；14:30 回酒店给娃午睡 1.5 小时，17:00 吃啫啫煲准点进场！",
+        isConcert: true
       },
       {
-        id: "D7",
-        shortLabel: "D7 周六",
-        dateStr: "12月5日",
-        city: "HK",
-        cityName: "香港 · 海洋公园/西九龙",
-        weather: "🌤️ 15℃~21℃",
-        title: "Day 7 · 探访全港6只大熊猫（含港产龙凤胎）& 温馨返程",
-        summary: "早餐吃嫩滑蛋白炖鲜奶与炒蛋多士，上午轻松打卡海洋公园海滨平地区（看安安可可+2岁龙凤胎加加得得+巨幕水族馆），午后从容返程！",
-        babyTip: "👶 4岁弹性备选：若返程高铁/航班较早，可将上午替换为「中环坐二层叮叮车兜风 + 西九文化区海滨大草坪晒太阳」，距西九龙站仅10分钟。"
+        id: "D7", shortLabel: "D7 收官", dateStr: "12/05 周六", city: "GZ",
+        cityName: "广州天河 · 珠江新城",
+        weather: "🌤️ 14℃~22℃",
+        title: "Day 7 · 无人驾驶 APM 小火车看小蛮腰 & 伴手礼满载返程",
+        summary: "睡到自然醒楼下吃收官早茶，带 4 岁娃坐喜来登马路对面的 APM 线无人驾驶观光小火车去海心沙拍广州塔全家福，买齐老广手信轻松回家！",
+        babyTip: "🚆 4岁小彩蛋：APM 线没有司机室，让宝宝站在第一节车厢车头隔着大玻璃看地下彩灯隧道，绝对开心到尖叫！",
+        isConcert: false
       }
     ];
 
     const SPOTS = [
-      // ==================== DAY 1 (11.29 周日 · 广州) ====================
+      // ==================== DAY 1 (11.29 周日 · 入住喜来登 + 孙燕姿首场) ====================
       {
-        id: "d1-1", day: "D1", seq: 1, time: "11:30", cat: "stay", city: "GZ",
-        name: "珠江新城/体育西亲子住宿圈（连住2晚）",
-        lat: 23.1192, lng: 113.3212,
-        desc: "抵达广州先寄存行李！住地铁3号线沿线（珠江新城/猎德），去西关老城和次日直达长隆都仅需25分钟，免去带娃搬酒店折腾。",
-        kidTip: "👶 选房建议：优先选带儿童洗漱包及洗衣烘干服务的公寓式/亲子酒店，轻装出行。",
-        tags: ["🚇 地铁3/5号线枢纽", "🧳 寄存行李即出发"],
-        cost: "连住2晚"
+        id: "d1-1", day: "D1", seq: 1, time: "11:30", cat: "stay", city: "GZ", region: "广州",
+        name: "广州粤海喜来登酒店（全程超级大本营）",
+        lat: 23.1319, lng: 113.3216,
+        desc: "天河路208号天河城正上方，负一层直通地铁1/3号线「体育西路站」！正对面就是正佳广场，去奥体、长隆、西关和广州东站全是核心C位。",
+        kidTip: "🏨 带娃优势：全程免折腾换酒店！楼下天河城超市买水果牛奶尿不湿抬脚即达，下午回房睡午觉太爽了。",
+        tags: ["🚇 1/3号线体育西路C口", "🛍️ 楼下即天河城商圈"],
+        cost: "已定大本营"
       },
       {
-        id: "d1-2", day: "D1", seq: 2, time: "12:30", cat: "eat", city: "GZ",
-        name: "陶陶居·第十甫路总店",
-        lat: 23.1147, lng: 113.2427,
-        desc: "始于1880年的西关粤式茶楼总店，独栋岭南骑楼雕花满洲窗，有电梯直达，全天候供应手工茶点。",
-        kidTip: "🥟 4岁必点：陶陶居大虾饺、锦绣海鲜红米肠（外酥里软不卡喉）、水牛奶菠萝包、鲜虾云吞。",
-        tags: ["🛗 推车电梯友好", "📱 可美味不用等提前取号"],
+        id: "d1-2", day: "D1", seq: 2, time: "12:30", cat: "eat", city: "GZ", region: "广州",
+        name: "陶陶居（正佳广场店·喜来登步行3分钟）",
+        lat: 23.1315, lng: 113.3266,
+        desc: "下楼过个马路即达百年茶楼老字号，免去拉车奔波，第一顿就让全家惊艳岭南点心手艺！",
+        kidTip: "🥟 4岁必点：陶陶居大虾饺、锦绣海鲜红米肠（脆香不卡喉）、水牛奶菠萝包、脆皮烧鹅。",
+        tags: ["🚶 距喜来登300米", "📱 可提前手机取号"],
         cost: "¥110/人"
       },
       {
-        id: "d1-3", day: "D1", seq: 3, time: "14:15", cat: "play", city: "GZ",
-        name: "永庆坊 & 粤剧艺术博物馆园林",
-        lat: 23.1135, lng: 113.2348,
-        desc: "从陶陶居步行8分钟即达。免费预约进入粤剧艺术博物馆岭南水榭园林，满池肥美锦鲤游弋，还有限定月亮桥景致。",
-        kidTip: "🐟 带娃亮点：4岁娃在池边看锦鲤和亭台小船超投入；街区石板路平坦，困了可在推车小睡。",
-        tags: ["🎫 免费入园", "🚼 推车友好 ⭐⭐⭐⭐"],
-        cost: "免费"
+        id: "d1-3", day: "D1", seq: 3, time: "14:00", cat: "play", city: "GZ", region: "广州",
+        name: "正佳极地海洋世界（可选）或 回喜来登午休",
+        lat: 23.1318, lng: 113.3270,
+        desc: "就在陶陶居同商场内！全室内恒温海洋馆看白鲸、企鹅、海底隧道和美人鱼表演；若坐车累了也可直接回喜来登大床补觉。",
+        kidTip: "😴 演出前蓄电：无论逛不逛海洋馆，建议 15:30 前回到喜来登让 4 岁娃睡 1 小时，晚上听歌不困闹。",
+        tags: ["🐋 室内恒温不晒", "🛏️ 离酒店步行3分钟"],
+        cost: "可选/¥220"
       },
       {
-        id: "d1-4", day: "D1", seq: 4, time: "15:40", cat: "drink", city: "GZ",
-        name: "南信牛奶甜品专家 / 顺记冰室",
-        lat: 23.1144, lng: 113.2412,
-        desc: "西关地道水牛奶糖水老铺，午后歇脚补充能量的甜蜜驿站。",
-        kidTip: "🍮 4岁必喝：温热原味双皮奶（纯水牛奶慢炖，像布丁一样入口即化）、手工椰子雪糕球。",
-        tags: ["🥛 温热可选不伤胃", "⏱️ 翻台快"],
-        cost: "¥25/人"
-      },
-      {
-        id: "d1-5", day: "D1", seq: 5, time: "16:30", cat: "play", city: "GZ",
-        name: "沙面欧陆风情岛",
-        lat: 23.1064, lng: 113.2393,
-        desc: "珠江畔静谧小岛，百年古榕树遮天蔽日，薄荷绿与鹅黄色欧式建筑林立，岛内无过境车流，安全宽敞。",
-        kidTip: "🌿 带娃亮点：全广州最舒服的平路推车步道+大草坪，傍晚16:30阳光柔和拍照巨出片！",
-        tags: ["🌳 无车步行绿岛", "🚼 推车友好 ⭐⭐⭐⭐⭐"],
-        cost: "免费"
-      },
-      {
-        id: "d1-6", day: "D1", seq: 6, time: "18:15", cat: "eat", city: "GZ",
-        name: "炳胜品味 / 点都德（珠江新城旗舰圈）",
+        id: "d1-4", day: "D1", seq: 4, time: "16:45", cat: "eat", city: "GZ", region: "广州",
+        name: "炳胜品味（珠江新城店·演出前早晚餐）",
         lat: 23.1185, lng: 113.3268,
-        desc: "回到酒店所在的珠江新城吃地道粤菜晚餐，吃完步行即可看夜景、随时回房休息。",
-        kidTip: "🍲 4岁必点：水鬼重豆腐（比蒸水蛋还嫩滑）、脆皮叉烧、金汤鲜竹笙、奶黄包。",
-        tags: ["👶 提供宝宝椅&儿童餐具", "🍽️ 粤菜米其林推荐"],
+        desc: "米其林推荐正宗粤菜！16:45 开餐第一波免排队，17:40 吃完从容打车/坐地铁前往奥体中心。",
+        kidTip: "🍲 4岁必点：水鬼重豆腐（像蒸蛋一样嫩滑）、招牌脆皮叉烧、靓汤、超大菠萝包。",
+        tags: ["🍽️ 错峰开餐不排队", "👶 配宝宝餐椅"],
         cost: "¥140/人"
       },
       {
-        id: "d1-7", day: "D1", seq: 7, time: "19:45", cat: "play", city: "GZ",
-        name: "海心沙亚运公园 & 广州塔珠江夜景",
-        lat: 23.1118, lng: 113.3192,
-        desc: "无需挤进广州塔底人潮，在江对岸海心沙大广场平视「小蛮腰」七彩变幻灯光秀，或乘50分钟珠江夜游船吹江风。",
-        kidTip: "✨ 带娃亮点：广场极开阔无视线遮挡，20:45前即可散步回酒店洗澡哄睡。",
-        tags: ["🌉 绝佳小蛮腰机位", "🚢 可选珠江夜游"],
-        cost: "免费/游船¥98"
+        id: "d1-5", day: "D1", seq: 5, time: "18:30", cat: "concert", city: "CONCERT", region: "广州",
+        name: "广东省奥林匹克体育中心 · 孙燕姿演唱会（第1场）",
+        lat: 23.1376, lng: 113.4083,
+        desc: "孙燕姿《就在日落以后》巡回演唱会广州站首场狂欢！天河区大观南路36号，距喜来登打车约22分钟，地铁4号线/21号线「黄村站」步行12分钟。",
+        kidTip: "🎧 4岁必带：儿童防噪隔音耳罩（大场馆分贝高，必护耳！）、薄外套、小面包零食；散场建议走21号线换乘5号线或提前半首歌离场避人潮。",
+        tags: ["🎤 11.29 就在日落以后", "🚇 地铁黄村站D/E口"],
+        cost: "重头戏✨"
       },
 
-      // ==================== DAY 2 (11.30 周一 · 广州长隆) ====================
+      // ==================== DAY 2 (11.30 周一 · 广州长隆野生动物世界) ====================
       {
-        id: "d2-1", day: "D2", seq: 1, time: "09:30", cat: "play", city: "GZ",
+        id: "d2-1", day: "D2", seq: 1, time: "09:45", cat: "play", city: "GZ", region: "广州",
         name: "广州长隆野生动物世界（北门·森林小火车）",
         lat: 23.0095, lng: 113.3060,
-        desc: "周一错峰王炸！从【北门】刷身份证入园，第一站免排队坐40分钟半开放式小火车穿越五大洲散养草原，斑马长颈鹿就在车窗边！",
-        kidTip: "🚂 4岁贴士：上小火车选【右侧靠窗座位】动物更多更近！1.0米以下儿童免票，满1米买儿童票。",
-        tags: ["🪪 必带二代身份证/户口本", "🛒 北门可租童车"],
+        desc: "周一完美错峰不排队！喜来登楼下体育西路坐3号线直达「汉溪长隆」免换乘。北门入园先坐40分钟半开放森林小火车穿越散养猛兽草原！",
+        kidTip: "🚂 4岁贴士：上小火车坐【右侧靠窗位】动物最贴近！自带轻便伞车或在北门租童车，刷身份证/带户口本入园。",
+        tags: ["🚇 3号线直达免换乘", "🪪 刷身份证入园"],
         cost: "成人¥300/小童¥210"
       },
       {
-        id: "d2-2", day: "D2", seq: 2, time: "11:15", cat: "play", city: "GZ",
-        name: "青龙山侏罗纪森林 & 飞禽表演",
+        id: "d2-2", day: "D2", seq: 2, time: "11:30", cat: "play", city: "GZ", region: "广州",
+        name: "青龙山侏罗纪恐龙森林",
         lat: 23.0056, lng: 113.3093,
-        desc: "下小火车顺路进入热带雨林步道，高大逼真的动态发声霸王龙、腕龙藏在雨林雾气中，4岁恐龙迷直接走不动道。",
-        kidTip: "🦖 4岁贴士：全程树荫木栈道平缓好推车，霸王龙声音略响可提前牵紧宝宝小手剧透一下。",
-        tags: ["🦕 会动的仿真恐龙", "🌲 全程阴凉不晒"],
+        desc: "下小火车顺路步入热带雨林栈道，巨型动态仿真霸王龙、腕龙藏在雾气树荫里，4岁小朋友看得目不转睛。",
+        kidTip: "🦖 4岁贴士：平缓树荫木栈道好推车；部分恐龙音效较逼真，牵着宝宝小手一起探险超有趣。",
+        tags: ["🦕 动态仿真恐龙", "🌲 阴凉好推车"],
         cost: "含门票内"
       },
       {
-        id: "d2-3", day: "D2", seq: 3, time: "12:30", cat: "eat", city: "GZ",
-        name: "长隆熊猫餐厅（边看大熊猫边午餐）",
+        id: "d2-3", day: "D2", seq: 3, time: "12:45", cat: "eat", city: "GZ", region: "广州",
+        name: "长隆熊猫餐厅（看国宝吃午餐）",
         lat: 23.0012, lng: 113.3118,
-        desc: "园区C位主题餐厅，落地玻璃外就是大熊猫户外活动栖息地，室内温暖舒适，适合一家三口休整充电。",
-        kidTip: "🐼 4岁必点：熊猫造型儿童套餐（肉酱意面/鸡腿蒸蛋饭+水果），饭后让娃在推车午睡40分钟。",
-        tags: ["🐼 熊猫伴餐", "🍼 旁设五星级母婴室"],
-        cost: "¥88~118/份"
+        desc: "隔着落地大玻璃一边看大熊猫啃竹子一边吃热乎午饭，室内温度舒适，旁有大型母婴休息室。",
+        kidTip: "🐼 4岁必点：熊猫造型儿童餐（意面/鸡腿饭+水果），饭后让宝宝在推车里睡40分钟午觉回血。",
+        tags: ["🐼 大熊猫伴餐", "🍼 舒适休整点"],
+        cost: "¥95/份"
       },
       {
-        id: "d2-4", day: "D2", seq: 4, time: "14:30", cat: "play", city: "GZ",
-        name: "熊猫乐园 & 考拉园 & 长颈鹿广场亲手投喂",
+        id: "d2-4", day: "D2", seq: 4, time: "14:30", cat: "play", city: "GZ", region: "广州",
+        name: "熊猫三胞胎 & 考拉园 & 长颈鹿广场投喂",
         lat: 22.9995, lng: 113.3125,
-        desc: "午睡醒来探访全球唯一大熊猫三胞胎「萌帅酷」、七代同堂的树熊考拉家族，在长颈鹿大草坪买树叶亲手喂长颈鹿，最后坐空中缆车俯瞰百兽出园！",
-        kidTip: "🦒 高光时刻：长颈鹿舌头卷树叶超温柔，4岁宝宝敢自己拿树枝喂！空中缆车满1米即可成人陪同乘坐。",
-        tags: ["🦒 必拍喂长颈鹿", "🚡 空中缆车省腿力"],
-        cost: "喂食树叶¥35"
+        desc: "看全球唯一大熊猫三胞胎「萌帅酷」和树上睡觉的考拉家族，在长颈鹿大草坪亲手喂树叶，最后乘免费空中缆车俯瞰百兽出南门！",
+        kidTip: "🦒 高光合影：买一把树叶（约¥35）让4岁娃亲手喂温顺的长颈鹿，满满成就感！",
+        tags: ["🦒 必拍亲手喂长颈鹿", "🚡 缆车省腿力"],
+        cost: "喂食约¥35"
       },
       {
-        id: "d2-5", day: "D2", seq: 5, time: "18:00", cat: "eat", city: "GZ",
-        name: "滋粥楼·顺德毋米粥火锅（番禺万博店）",
+        id: "d2-5", day: "D2", seq: 5, time: "18:00", cat: "eat", city: "GZ", region: "广州",
+        name: "番禺鹅公村 / 滋粥楼番禺店（粤菜晚餐）",
         lat: 23.0062, lng: 113.3425,
-        desc: "距长隆仅10分钟车程的地道顺德老字号！熬化不见米粒的纯白米汤做锅底，锁住海鲜肉类鲜甜，清润不上火。",
-        kidTip: "🍲 4岁必点：无刺皖鱼片、鲜活白灼虾、手打玉米猪肉丸、顺德炸牛奶，最后盛一碗精华海鲜粥！",
-        tags: ["🥣 清淡无骨4岁最爱", "🚗 离长隆10分钟"],
-        cost: "¥125/人"
-      },
-
-      // ==================== DAY 3 (12.1 周二 · 广州 -> 深圳) ====================
-      {
-        id: "d3-1", day: "D3", seq: 1, time: "09:30", cat: "eat", city: "GZ",
-        name: "点都德·花城店 / 广州酒家（早茶收官）",
-        lat: 23.1198, lng: 113.3218,
-        desc: "睡到自然醒，在酒店步行圈吃一顿丰盛广式早茶收官，不赶早班车，从容退房前往广州南站。",
-        kidTip: "🐰 4岁必点：呆萌小兔椰汁糕、金牌虾饺皇、叉烧包、滑鸡粥（软烂入味）。",
-        tags: ["🍵 广州早茶收官", "🚶 近酒店免折腾"],
-        cost: "¥95/人"
-      },
-      {
-        id: "d3-2", day: "D3", seq: 2, time: "11:30", cat: "transit", city: "SZ",
-        name: "广州南站 🚄 深圳北站（高铁仅29分钟）",
-        lat: 22.6095, lng: 114.0182,
-        desc: "广深港高铁密集发车，29分钟直达深圳北站！还没等宝宝坐不住就已经到深圳了。",
-        kidTip: "🎫 免票攻略：4岁未满6周岁免票！买大人票后务必在 12306 App 订单页点击【免费乘车儿童申报】关联宝宝证件。",
-        tags: ["⚡ 29分钟极速跨城", "👶 4岁免票申领"],
-        cost: "成人¥74.5/娃¥0"
-      },
-      {
-        id: "d3-3", day: "D3", seq: 3, time: "12:45", cat: "stay", city: "SZ",
-        name: "深圳福田中心/景田亲子住宿圈（连住2晚）",
-        lat: 22.5415, lng: 114.0450,
-        desc: "黄金C位：距儿童探索馆打车8分钟、深圳湾公园15分钟，后天从福田站坐高铁去香港西九龙仅需14分钟！",
-        kidTip: "😴 午睡充电：办理入住后先让宝宝在酒店大床踏实午睡到15:00，傍晚室内放电不闹觉。",
-        tags: ["🚇 近福田高铁站", "🛌 连住2晚不搬家"],
-        cost: "连住2晚"
-      },
-      {
-        id: "d3-4", day: "D3", seq: 4, time: "15:30", cat: "play", city: "SZ",
-        name: "深圳妇儿大厦·儿童探索馆（周二开放至20:00）",
-        lat: 22.5458, lng: 114.0435,
-        desc: "多巴胺彩虹地标建筑！馆内4000㎡六大沉浸式主题展区，专为学龄前及低龄儿童打造的角色扮演与感官乐园（周一闭馆，周二错峰人少！）。",
-        kidTip: "🚒 4岁必玩：穿迷你消防服开消防车救火、宠物医院给小狗看病、迷你超市收银、「水的故事」玩水机关！",
-        tags: ["📱 提前3天小程序约票", "🏠 全室内恒温溜娃天花板"],
-        cost: "1大1小¥149"
-      },
-      {
-        id: "d3-5", day: "D3", seq: 5, time: "18:30", cat: "eat", city: "SZ",
-        name: "润园四季·海南椰子鸡（福田星河COCO Park店）",
-        lat: 22.5352, lng: 114.0536,
-        desc: "来深圳必吃的国民亲子美食！三个现砍鲜椰青水+椰肉直接下正宗文昌鸡，清甜浓郁无任何辛辣调料。",
-        kidTip: "🥥 4岁必点：先盛一碗纯椰青鸡汤（加珍珠马蹄超甜！）、手打虾滑、一级腊味煲仔饭。",
-        tags: ["🥥 清甜不辣宝宝狂炫", "🎈 等位送小气球/贴纸"],
-        cost: "¥120/人"
-      },
-
-      // ==================== DAY 4 (12.2 周三 · 深圳海风日) ====================
-      {
-        id: "d4-1", day: "D4", seq: 1, time: "09:30", cat: "play", city: "SZ",
-        name: "深圳湾公园（地铁D2口出站即大海&海鸥！）",
-        lat: 22.5222, lng: 114.0028,
-        desc: "11月底至12月限定自然奇观！地铁9号线深圳湾公园站D2口一出来就是蔚蓝海面与成百上千只西伯利亚越冬海鸥、白鹭齐飞，对岸就是香港元朗。",
-        kidTip: "🕊️ 4岁看点：上午9:30-11:00海鸥群离栈道最近，沿海全平缓步道+大草坪，推车散步海风拂面（文明观鸟勿投喂面包哦）。",
-        tags: ["🕊️ 12月限定候鸟海鸥季", "🚇 出地铁50米看海"],
-        cost: "免费"
-      },
-      {
-        id: "d4-2", day: "D4", seq: 2, time: "12:00", cat: "eat", city: "SZ",
-        name: "蘩楼 / 蔡澜港式点心（南山海岸城店）",
-        lat: 22.5168, lng: 113.9365,
-        desc: "创意新派港式点心餐厅，出餐精致小巧，非常适合一家三口多点几样尝鲜。",
-        kidTip: "🥟 4岁必点：酥皮山楂叉烧包（外酥酸甜超开胃）、赛螃蟹凤眼饺、鲜牛奶炖桃胶、萝卜糕。",
-        tags: ["👶 宝宝座椅齐全", "🛍️ 商场连廊好推车"],
-        cost: "¥100/人"
-      },
-      {
-        id: "d4-3", day: "D4", seq: 3, time: "13:45", cat: "drink", city: "SZ",
-        name: "阿嬷手作（南山海岸城/万象天地店）",
-        lat: 22.5175, lng: 113.9380,
-        desc: "华南超人气现熬手作茶饮，巴马水牛乳与广西荔浦芋头每日现蒸现捣。",
-        kidTip: "🧋 点单攻略：爸妈必喝招牌「打·米麻薯」，给4岁宝宝点无茶底无咖啡因的「水牛乳双皮奶」或清润马蹄甘蔗水！",
-        tags: ["📱 提前1小时小程序点单", "🥛 有无茶底儿童款"],
-        cost: "¥26/杯"
-      },
-      {
-        id: "d4-4", day: "D4", seq: 4, time: "16:30", cat: "play", city: "SZ",
-        name: "欢乐港湾·童乐园 &「湾区之光」摩天轮",
-        lat: 22.5421, lng: 113.8778,
-        desc: "午休后先在海边免费的「童乐园」无动力白沙池滑梯玩耍，17:15登上128米高全天景太空舱摩天轮，俯瞰伶仃洋绝美橘子海日落！",
-        kidTip: "🎡 4岁免票：1.0米以下免票（1.0~1.4米优待票），25人超大轿厢极稳，婴儿车不用收可直接推入舱内！",
-        tags: ["🌅 17:15绝美海上日落", "🏖️ 免费无动力沙池"],
-        cost: "成人¥150/童乐园免费"
-      },
-      {
-        id: "d4-5", day: "D4", seq: 5, time: "18:30", cat: "eat", city: "SZ",
-        name: "八合里潮汕鲜牛肉火锅（欢乐港湾店）",
-        lat: 22.5435, lng: 113.8805,
-        desc: "就在摩天轮旁商场内！清甜牛骨玉米萝卜汤底，明档现切鲜牛肉涮8秒鲜嫩多汁。",
-        kidTip: "🥩 4岁必点：手打熟牛肉丸（让店员帮忙剪成四小瓣防噎好咬）、嫩肉/吊龙配沙茶酱（微甜不辣）、湿炒牛河。",
-        tags: ["🍲 牛骨清汤暖胃", "✂️ 可请店员剪小块"],
+        desc: "逛完长隆打车10分钟即达番禺老牌粤菜名店，大快朵颐脆皮烧鹅、清甜白切鸡和原盅老火炖汤，吃完回喜来登放松泡澡！",
+        kidTip: "🍲 4岁必点：马蹄肉饼蒸蛋、白灼鲜虾、清甜炖瘦肉汤，软烂营养不油腻。",
+        tags: ["🚗 距长隆仅10分钟", "🍗 招牌脆皮烧鹅"],
         cost: "¥115/人"
       },
 
-      // ==================== DAY 5 (12.3 周四 · 深圳 -> 香港) ====================
+      // ==================== DAY 3 (12.1 周二 · 顺德大良美食玩乐全天) ====================
       {
-        id: "d5-1", day: "D5", seq: 1, time: "09:45", cat: "transit", city: "HK",
-        name: "福田/深圳北 🚄 香港西九龙站（一地两检）",
+        id: "d3-1", day: "D3", seq: 1, time: "10:00", cat: "play", city: "SD", region: "顺德",
+        name: "顺德清晖园（岭南四大名园）",
+        lat: 22.8384, lng: 113.2502,
+        desc: "从喜来登打车约50分钟直达顺德大良（或广州南城轨10分钟到顺德站）。满园亭台水榭、彩色满洲窗与成群超大锦鲤，精巧好逛不累娃！",
+        kidTip: "🐟 4岁亮点：小桥流水边看胖锦鲤、钻假山拱门，园子大小刚好够逛1.5小时，推车顺畅。",
+        tags: ["🏯 岭南园林天花板", "🎫 门票仅¥15/儿童免"],
+        cost: "¥15/人"
+      },
+      {
+        id: "d3-2", day: "D3", seq: 2, time: "11:45", cat: "eat", city: "SD", region: "顺德",
+        name: "红星光发煲仔饭 / 华盖路顺德私房菜",
+        lat: 22.8396, lng: 113.2495,
+        desc: "清晖园出门步行5分钟就是华盖路骑楼老街！尝尝炭火瓦煲现焗的顺德招牌煲仔饭、顺德拆鱼羹与酥脆炸牛奶。",
+        kidTip: "⚠️ 4岁吃法：煲仔饭把香硬锅巴留给大人，挑中间软香米饭和排骨/滑鸡给宝宝；若大人加点顺德鱼生，切记不要喂给4岁宝宝吃生鱼片哦。",
+        tags: ["🍚 现焗瓦煲煲仔饭", "🚶 清晖园步行可达"],
+        cost: "¥70/人"
+      },
+      {
+        id: "d3-3", day: "D3", seq: 3, time: "13:30", cat: "drink", city: "SD", region: "顺德",
+        name: "金榜上街 · 欢记牛乳 / 民信老铺双皮奶",
+        lat: 22.8390, lng: 113.2470,
+        desc: "顺德最地道的百年牛乳老巷，空气里都是浓郁奶香！连吃温热原味双皮奶、鲜水牛奶和凤凰奶糊。",
+        kidTip: "🥛 4岁最爱：点【热双皮奶】（姜撞奶微辣留给爸妈），香甜嫩滑像鲜奶布丁，4岁娃一口气能吃光一整碗！",
+        tags: ["🍮 世界美食之都必打卡", "🥛 现煮水牛奶"],
+        cost: "¥20/人"
+      },
+      {
+        id: "d3-4", day: "D3", seq: 4, time: "15:00", cat: "play", city: "SD", region: "顺德",
+        name: "顺德欢乐海岸 PLUS &「顺德眼」摩天轮",
+        lat: 22.8164, lng: 113.3035,
+        desc: "免大门票的宝藏亲子地标！欢乐时光公园专为低龄儿童设旋转木马、小飞象、碰碰车，还能逛免费顺德美食博物馆吹空调，傍晚坐99米「顺德眼」看日落！",
+        kidTip: "🎡 4岁免折腾：单项按次买票想玩啥买啥不浪费钱！摩天轮轿厢平稳宽敞，推车友好。",
+        tags: ["🆓 免大门票按项玩", "🎡 99米顺德眼日落"],
+        cost: "按项¥30~80"
+      },
+      {
+        id: "d3-5", day: "D3", seq: 5, time: "18:00", cat: "eat", city: "SD", region: "顺德",
+        name: "太艮堡毋米粥（顺德大良总店）",
+        lat: 22.8427, lng: 113.2514,
+        desc: "来顺德压轴重头戏！熬化不见米粒的雪白浓郁米汤做火锅底，涮出极致鲜甜又锁住水分，暖胃滋补一点不上火。",
+        kidTip: "🍲 4岁狂炫菜单：无骨脆鲩鱼片、鲜活基围虾、手打玉米猪肉丸、香酥大油条，最后盛一碗集齐海鲜精华的浓稠白粥！饭后打车/城轨回喜来登。",
+        tags: ["🥣 毋米粥火锅鼻祖", "👶 4岁清淡营养满分"],
+        cost: "¥130/人"
+      },
+
+      // ==================== DAY 4 (12.2 周三 · 澳门精华一日游) ====================
+      {
+        id: "d4-1", day: "D4", seq: 1, time: "08:30", cat: "transit", city: "MO", region: "珠海",
+        name: "广州南 🚄 珠海站 ➔ 拱北口岸过关入澳",
+        lat: 22.2154, lng: 113.5530,
+        desc: "城轨约55分钟抵珠海站，出站步行5分钟即达拱北口岸，过关就是澳门关闸，轻装不带行李箱超爽！",
+        kidTip: "🛂 带娃必看：带齐一家三口港澳通行证+有效【澳门签注】！4岁宝宝未满7岁必须走人工通道，过关打印的小白条夹好勿丢。",
+        tags: ["🚄 广珠城轨55分钟", "👶 4岁走人工通关"],
+        cost: "单程¥70/娃免票"
+      },
+      {
+        id: "d4-2", day: "D4", seq: 2, time: "10:15", cat: "play", city: "MO", region: "澳门",
+        name: "澳门半岛 · 议事亭前地 & 玫瑰堂 & 大三巴",
+        lat: 22.1975, lng: 113.5406,
+        desc: "关闸坐3路/10路公交或打车直达新马路！逛五彩斑斓的南欧风喷水池广场、鹅黄色玫瑰堂与地标大三巴牌坊。",
+        kidTip: "🛗 推车捷径：大三巴台阶人多不好推车，从右侧【澳门博物馆直梯】可轻松直上大炮台平地俯瞰全景，省力又出片！",
+        tags: ["🏛️ 世界遗产地标", "🛗 博物馆直梯免爬楼"],
+        cost: "免费"
+      },
+      {
+        id: "d4-3", day: "D4", seq: 3, time: "11:45", cat: "eat", city: "MO", region: "澳门",
+        name: "黄枝记云吞面 / 世记咖啡 + 玛嘉烈葡式蛋挞",
+        lat: 22.1932, lng: 113.5401,
+        desc: "就在议事亭前地旁！吃老字号弹牙鲜虾竹升云吞面、厚蛋猪扒包，顺路买盒刚出炉焦香酥脆的玛嘉烈葡挞！",
+        kidTip: "🥧 4岁必吃：刚出炉的葡式蛋挞内馅像烤布丁一样嫩滑（略晾一下防烫嘴），配鲜虾云吞面吃得香喷喷。",
+        tags: ["🥧 现烤葡挞天花板", "💳 支持支付宝/微信"],
+        cost: "¥85/人"
+      },
+      {
+        id: "d4-4", day: "D4", seq: 4, time: "13:45", cat: "play", city: "MO", region: "澳门",
+        name: "路氹城 · 威尼斯人室内运河 & 伦敦人",
+        lat: 22.1486, lng: 113.5613,
+        desc: "打车或乘免费发财车跨海到路氹城！威尼斯人、巴黎人、伦敦人室内连廊互通恒温空调，推车零台阶——看永不天黑的人造蓝天运河、坐贡多拉小船、看皇家卫兵换岗！",
+        kidTip: "⛵ 4岁惊喜：威尼斯人运河船夫会唱意大利歌，伦敦人红色双层巴士与大本钟拍照超童话，全程室内不晒不累！",
+        tags: ["❄️ 全室内恒温无障碍", "🚌 免费发财车接驳"],
+        cost: "免费/贡多拉可选"
+      },
+      {
+        id: "d4-5", day: "D4", seq: 5, time: "16:15", cat: "drink", city: "MO", region: "澳门",
+        name: "官也街美食散步 & 手信采购",
+        lat: 22.1505, lng: 113.5578,
+        desc: "从威尼斯人走带空调的自动步行连廊8分钟直达氹仔官也街！马卡龙配色葡式老房子里藏满地道甜品与手信。",
+        kidTip: "🍮 4岁必尝：安德鲁蛋挞、莫义记木糠布丁/芒果大菜糕，顺手买钜记杏仁饼和肉松凤凰卷。18:15 乘银河/威尼斯人免费发财车回拱北口岸乘城轨返喜来登！",
+        tags: ["🌉 空调连廊步行8分钟", "🎁 一站买齐澳门手信"],
+        cost: "¥50/人"
+      },
+
+      // ==================== DAY 5 (12.3 周四 · 香港一日游 / 顺路深圳彩蛋) ====================
+      {
+        id: "d5-1", day: "D5", seq: 1, time: "08:45", cat: "transit", city: "HK", region: "香港",
+        name: "广州东/南 🚄 香港西九龙站（一地两检）",
         lat: 22.3046, lng: 114.1665,
-        desc: "福田站出发仅14分钟（深圳北18分钟）直抵香港市中心西九龙站！在站内B2/B3层一次走完内地出境+香港入境，带娃不用吹风日晒。",
-        kidTip: "🛂 通关提醒：检查一家三口（含4岁宝宝本人）港澳通行证及有效香港签注！西九龙站有母婴优先人工通道。",
-        tags: ["🚄 14分钟直达维港旁", "🛂 同站一地两检"],
-        cost: "福田出发¥68/娃¥0"
+        desc: "喜来登打车仅10分钟就到【广州东站】直达西九龙（约1.5小时），或去广州南站乘车（仅48分钟）！同站完成内地出境+香港入境，丝滑入港。",
+        kidTip: "🛂 证件检查：确认大人+4岁娃均带好【有效香港签注】；12306提前勾选免费乘车儿童申报，省一张高铁票！",
+        tags: ["🚄 广州东距喜来登10分钟", "🛂 同站一地两检"],
+        cost: "单程¥215/娃免票"
       },
       {
-        id: "d5-2", day: "D5", seq: 2, time: "11:15", cat: "stay", city: "HK",
-        name: "香港尖沙咀/柯士甸地铁口酒店（连住2晚）",
-        lat: 22.2988, lng: 114.1705,
-        desc: "西九龙站打车或步行连廊10分钟即达！连住尖沙咀2晚，下楼就是海滨长廊、天星码头，去迪士尼和海洋公园地铁均极方便。",
-        kidTip: "🔌 住宿贴士：记得带英标三脚转换插头（或提前向酒店前台借用）及宝宝轻便折叠伞车。",
-        tags: ["🏙️ 下楼即维港", "🧳 先寄存行李轻装逛"],
-        cost: "连住2晚"
+        id: "d5-2", day: "D5", seq: 2, time: "10:30", cat: "play", city: "HK", region: "香港",
+        name: "K11 MUSEA 尖沙咀海滨 & 乐高探索中心",
+        lat: 22.2936, lng: 114.1741,
+        desc: "西九龙出站10分钟即达维港核心！B1层有专为低龄孩子打造的【香港乐高探索中心】（100万块积木微缩香港+得宝农庄），不想进馆可直接逛星光大道海滨吹风看大船！",
+        kidTip: "🧱 弹性二选一：爱拼搭进乐高玩2小时（商场母婴室全港顶配）；爱户外直接海滨长廊推车漫步晒太阳。",
+        tags: ["🧱 乐高室内王国", "🌊 维港零距离海景"],
+        cost: "海滨免费/乐高约HK$240"
       },
       {
-        id: "d5-3", day: "D5", seq: 3, time: "12:00", cat: "eat", city: "HK",
-        name: "华嫂冰室（尖沙咀棉登径店）/ 麦奀云吞面",
+        id: "d5-3", day: "D5", seq: 3, time: "12:30", cat: "eat", city: "HK", region: "香港",
+        name: "华嫂冰室（尖沙咀店）/ 澳洲牛奶公司",
         lat: 22.2974, lng: 114.1738,
-        desc: "明星街坊都爱去的招牌港式冰室，番茄浓汤底酸甜醇厚，对小朋友胃口堪称绝杀！",
-        kidTip: "🍅 4岁必点：招牌番茄浓汤猪扒鸡翼通粉（软滑通心粉吸满鲜茄汤，4岁娃自己拿勺吃光！）、鲜油菠萝包。",
-        tags: ["🍅 酸甜鲜茄汤不踩雷", "💳 支持支付宝/微信/八达通"],
+        desc: "步行可达的明星招牌港式茶餐厅！酸甜浓郁的鲜番茄浓汤底对4岁小朋友简直是干饭神器。",
+        kidTip: "🍅 4岁必点：华嫂招牌番茄浓汤猪扒鸡翼通粉 + 鲜油菠萝包（若去佐敦澳牛则点蛋白炖鲜奶+嫩滑炒蛋多士！）。",
+        tags: ["🍅 4岁宝宝干饭神器", "💳 支付宝/八达通直付"],
         cost: "HK$85/人"
       },
       {
-        id: "d5-4", day: "D5", seq: 4, time: "14:00", cat: "play", city: "HK",
-        name: "香港乐高探索中心（K11 MUSEA B1层）",
-        lat: 22.2936, lng: 114.1741,
-        desc: "藏在维港海边艺术商场里的室内乐高奇幻乐园！100多万块积木拼成会动会发光的微缩香港地标，还有古堡历险射击车与4D飘雪小影院。",
-        kidTip: "🧱 4岁最爱：得宝大颗粒农庄滑梯、自己拼赛车在斜坡赛道比快慢！K11商场育婴室豪华舒适，逛累随时回酒店小睡。",
-        tags: ["🧱 专为低龄亲子设计", "❄️ 4D微风飘雪体验"],
-        cost: "约HK$240/人"
-      },
-      {
-        id: "d5-5", day: "D5", seq: 5, time: "16:45", cat: "transit", city: "HK",
-        name: "尖沙咀天星码头 ⛴️ 百年天星小轮横渡维港",
-        lat: 22.2938, lng: 114.1686,
-        desc: "《国家地理》人生必游体验之一！花几块钱登上墨绿色百年双层渡轮，10分钟迎着夕阳横渡维多利亚港直抵中环7号码头。",
-        kidTip: "⛴️ 乘船贴士：直接刷支付宝乘车码或八达通入闸！选上层船头靠窗位看大轮船交错，4岁小朋友兴奋度满分。",
-        tags: ["🌅 夕阳渡海10分钟", "💰 仅约HK$5~6.5"],
-        cost: "HK$6.5/成人"
-      },
-      {
-        id: "d5-6", day: "D5", seq: 6, time: "17:15", cat: "drink", city: "HK",
-        name: "中环香港摩天轮 & 富豪雪糕车",
+        id: "d5-4", day: "D5", seq: 4, time: "14:30", cat: "play", city: "HK", region: "香港",
+        name: "百年天星小轮 ➔ HK$20中环摩天轮 & 富豪雪糕 ➔ 叮叮车",
         lat: 22.2858, lng: 114.1594,
-        desc: "出中环天星码头步行2分钟即达！全香港最良心的地标——20港币连转3圈俯瞰中环摩天楼群华灯初上，下轮在路边买一支红白蓝富豪雪糕！",
-        kidTip: "🍦 甜蜜打卡：成人HK$20、3-11岁小童仅HK$10！富豪雪糕车香草软雪糕HK$13奶香浓郁，拍一张维港雪糕合影。",
-        tags: ["🎡 HK$20转3圈超值", "🍦 偶遇流动富豪雪糕车"],
-        cost: "摩天轮HK$20+雪糕HK$13"
+        desc: "香港一日游最高光精华串烧！尖沙咀码头花几块钱坐百年绿色渡轮横渡维港 ➔ 中环码头花HK$20坐3圈摩天轮 + 买富豪雪糕车香草雪糕 ➔ 上二层叮叮车第一排兜风看香港街景！",
+        kidTip: "⛴️ 4岁乐翻天：天星小轮+摩天轮+软雪糕+双层叮叮车，短短2.5小时集齐4种交通/童趣体验，几乎零步数！",
+        tags: ["🎡 成人HK$20小童HK$10", "🍦 偶遇富豪雪糕车"],
+        cost: "合计约HK$45"
       },
       {
-        id: "d5-7", day: "D5", seq: 7, time: "18:45", cat: "eat", city: "HK",
-        name: "尖沙咀港式烧味茶餐厅 & 星光大道漫步",
+        id: "d5-5", day: "D5", seq: 5, time: "17:15", cat: "eat", city: "HK", region: "香港",
+        name: "甘牌烧鹅 / 尖沙咀地道烧味茶餐厅",
         lat: 22.2965, lng: 114.1718,
-        desc: "乘天星小轮回尖沙咀欣赏维港两岸璀璨夜景，在尖沙咀吃地道蜜汁叉烧烧鹅饭与鲜虾云吞。",
-        kidTip: "🍖 4岁必点：蜜汁叉烧滑蛋饭（酱汁甜香肉嫩）、鲜虾净云吞、清甜西洋菜汤。",
-        tags: ["🌃 顺游维港星光大道", "🏨 饭后散步回酒店"],
-        cost: "HK$110/人"
+        desc: "乘天星小轮回尖沙咀吃一顿蜜汁叉烧烧鹅饭与鲜虾云吞，爸妈喝杯丝袜奶茶，19:00 前轻松抵西九龙站过关乘高铁返穗！",
+        kidTip: "🍖 4岁必点：蜜汁叉烧滑蛋饭（微甜软嫩）、鲜虾净云吞；预留45分钟西九龙通关最从容。",
+        tags: ["🍖 正宗港式烧味", "🚄 1小时直达回穗"],
+        cost: "HK$105/人"
+      },
+      {
+        id: "d5-6", day: "D5", seq: 6, time: "顺路彩蛋", cat: "eat", city: "SZ", region: "深圳",
+        name: "【深圳路过彩蛋】深圳湾看12月海鸥 + 润园四季椰子鸡",
+        lat: 22.5352, lng: 114.0536,
+        desc: "高铁往返香港均经停深圳北/福田！若不想在香港待太晚（或觉得连去港澳太累想把今天改成深圳轻松半日），可在福田出站吃纯椰青水煮的【润园四季椰子鸡】，顺路地铁9号线D2口出站50米看12月限定成群越冬海鸥！",
+        kidTip: "🥥 4岁最爱：三个纯椰青水煮文昌鸡无辣超清甜，泡泰国香米饭宝宝连炫两碗；深圳湾上午/傍晚海鸥满天飞超治愈。",
+        tags: ["🕊️ 12月限定海鸥季", "🥥 深圳必吃椰子鸡"],
+        cost: "¥120/人"
       },
 
-      // ==================== DAY 6 (12.4 周五 · 香港迪士尼圣诞季) ====================
+      // ==================== DAY 6 (12.4 周五 · 广州老西关慢吃 + 孙燕姿二刷！) ====================
       {
-        id: "d6-1", day: "D6", seq: 1, time: "10:00", cat: "play", city: "HK",
-        name: "香港迪士尼乐园·魔雪奇缘世界（圣诞冬日市集）",
-        lat: 22.3145, lng: 114.0405,
-        desc: "乘米奇车窗迪士尼专线入园！趁上午人少先冲全球首个阿德尔王国：坐【魔雪奇幻之旅】木船看艾莎施展冰雪魔法（无身高限制！），逛2026圣诞限定冬日市集！",
-        kidTip: "⛄ 2026圣诞亮点：戴圣诞帽的小白 Olaf 惊喜现身互动！下载官方App随时看排队分钟数，必须提前在官网做好【入园预约】。",
-        tags: ["🎄 A Disney Christmas圣诞季", "⛵ 魔雪木船不限身高"],
-        cost: "1日票+预约入园"
+        id: "d6-1", day: "D6", seq: 1, time: "09:45", cat: "eat", city: "GZ", region: "广州",
+        name: "泮溪酒家（荔湾湖畔·中国最大园林酒家）",
+        lat: 23.1205, lng: 113.2312,
+        desc: "昨天去完港深今天全天留在广州慢叹！从喜来登楼下坐1号线直达老西关，在假山湖景亭台间吃一顿仪式感拉满的传统广式早茶。",
+        kidTip: "🐰 4岁必点：绿茵白兔饺（小白兔造型萌化宝宝！）、艇仔粥、大虾饺、马蹄糕。",
+        tags: ["🏞️ 岭南湖畔园林早茶", "🚇 喜来登1号线直达"],
+        cost: "¥105/人"
       },
       {
-        id: "d6-2", day: "D6", seq: 2, time: "12:15", cat: "eat", city: "HK",
-        name: "阿德尔港畔餐厅 / 皇室宴会厅 + 小雪人热朱古力",
-        lat: 22.3139, lng: 114.0410,
-        desc: "在童话城堡或阿德尔小镇享用热腾腾的亲子午餐，顺便品尝圣诞冬日市集限定甜品。",
-        kidTip: "☕ 4岁必尝：米奇造型松饼/肉丸意面儿童餐 + 圣诞市集限定【小雪人棉花糖热朱古力】（拍照超萌！）。",
-        tags: ["🍽️ 可提前买园区三合一餐券更省", "❄️ 室内暖气休息"],
-        cost: "HK$130~160/份"
+        id: "d6-2", day: "D6", seq: 2, time: "11:15", cat: "play", city: "GZ", region: "广州",
+        name: "永庆坊 & 粤剧艺术博物馆 & 沙面欧陆风情岛",
+        lat: 23.1064, lng: 113.2393,
+        desc: "西关最美漫游线：逛永庆坊骑楼月亮桥、免费进粤剧艺术博物馆看满池肥美锦鲤，再步行至无车流干扰的沙面古榕欧式小岛草坪晒太阳拍照！",
+        kidTip: "🌿 4岁推车天堂：沙面岛全岛平坦绿荫无过境车，4岁小朋友可以在百年大榕树下尽情跑跳撒欢。",
+        tags: ["🌳 沙面古榕无车绿岛", "🐟 永庆坊看满池锦鲤"],
+        cost: "免费"
       },
       {
-        id: "d6-3", day: "D6", seq: 3, time: "14:00", cat: "play", city: "HK",
-        name: "幻想世界全刷（4岁零门槛童话天堂）",
-        lat: 22.3132, lng: 114.0418,
-        desc: "整个下午泡在最适合4岁宝宝的幻想世界：【小熊维尼历险之旅】坐蜜罐车 ➔ 【小小世界】坐船吹空调听玩偶唱歌15分钟 ➔ 【灰姑娘旋转木马】 ➔ 【米奇幻想曲】3D剧场！",
-        kidTip: "🎠 省妈秘籍：「小小世界」几乎不排队且全程平稳坐船15分钟，大人歇脚、宝宝回血神项目！15:30看城堡前「米奇与好友圣诞惊喜」舞台秀。",
-        tags: ["🧸 全部无身高限制", "🎶 童话音乐沉浸"],
-        cost: "含门票内"
+        id: "d6-3", day: "D6", seq: 3, time: "13:00", cat: "drink", city: "GZ", region: "广州",
+        name: "南信牛奶甜品 / 顺记冰室 & 恩宁路小吃",
+        lat: 23.1144, lng: 113.2412,
+        desc: "西关糖水老铺收割！一碗温热原味水牛奶双皮奶、一颗老广手工椰子雪糕球，顺路尝陈添记鱼皮或银记拉肠。",
+        kidTip: "🍮 午休前甜点：吃完 14:15 坐1号线20分钟直达回喜来登，给 4 岁宝宝舒舒服服睡 1.5 小时午觉备战今晚二刷！",
+        tags: ["🥥 老广手工椰子雪糕", "🛏️ 14:30回喜来登午休"],
+        cost: "¥28/人"
       },
       {
-        id: "d6-4", day: "D6", seq: 4, time: "18:15", cat: "play", city: "HK",
-        name: "美国小镇大街「梦想成真圣诞树亮灯礼」无人机飘雪",
-        lat: 22.3116, lng: 114.0433,
-        desc: "夜幕降临，圣诞高飞登场主持亮灯仪式！夜空升起无人机组成奇幻圣诞图案，巨型圣诞树点亮瞬间，整条大街飘起漫天浪漫雪花！",
-        kidTip: "❄️ 弹性双方案：4岁娃在南方街头接“雪花”会开心疯！若宝宝此时已困，18:45直接错峰坐地铁回尖沙咀吃生滚粥；若精神好，留看20:30城堡烟花《星梦光影之旅》！",
-        tags: ["🌨️ 漫天飘雪+无人机秀", "🎆 20:30可选留看城堡烟花"],
-        cost: "含门票内"
+        id: "d6-4", day: "D6", seq: 4, time: "17:00", cat: "eat", city: "GZ", region: "广州",
+        name: "惠食佳·啫啫煲（珠江新城/天河店）",
+        lat: 23.1225, lng: 113.3228,
+        desc: "连续多年米其林指南推荐！砂锅端上桌滋滋作响香气扑鼻，吃完能量满格奔赴演唱会！",
+        kidTip: "🍲 4岁必点：不辣的啫啫滑鸡煲、招牌黄鳝/腊味煲仔饭（挑软米）、冰镇鹅肝/清炒时蔬（砂锅滚烫注意别让宝宝碰锅边）。",
+        tags: ["🔥 广府啫啫煲天花板", "🚗 距喜来登5分钟"],
+        cost: "¥150/人"
+      },
+      {
+        id: "d6-5", day: "D6", seq: 5, time: "18:30", cat: "concert", city: "CONCERT", region: "广州",
+        name: "广东省奥林匹克体育中心 · 孙燕姿演唱会（第2场二刷！）",
+        lat: 23.1376, lng: 113.4083,
+        desc: "12月4日周五场二刷《就在日落以后》！已经对场馆动线轻车熟路，换个角度把《遇见》《绿光》《天黑黑》再痛快合唱一遍！",
+        kidTip: "🎤 二刷贴士：依然记得带上4岁宝宝的【防噪隔音耳罩】+薄外套；散场直接点页面顶栏【🏨 回喜来登】一键百度导航回酒店！",
+        tags: ["🎤 12.4 二刷青春大合唱", "🎧 必带儿童防噪耳罩"],
+        cost: "圆满二刷✨"
       },
 
-      // ==================== DAY 7 (12.5 周六 · 香港大熊猫/慢游返程) ====================
+      // ==================== DAY 7 (12.5 周六 · 广州收官 & 返程) ====================
       {
-        id: "d7-1", day: "D7", seq: 1, time: "09:00", cat: "eat", city: "HK",
-        name: "澳洲牛奶公司（佐敦白加士街传奇早餐）",
-        lat: 22.3046, lng: 114.1706,
-        desc: "距尖沙咀/西九龙咫尺之遥的香港传奇冰室，光速上菜，炒蛋与炖奶水准独步全港。",
-        kidTip: "🥛 4岁必点：温热【蛋白炖鲜奶】（嫩滑奶香满分）+【牛油方包配嫩滑炒蛋】+ 火腿通粉，15分钟元气吃饱！（注：仅收港币现金或八达通）",
-        tags: ["⚡ 3分钟光速上菜", "💵 备约HK$150现金/八达通"],
-        cost: "HK$65/人"
+        id: "d7-1", day: "D7", seq: 1, time: "10:00", cat: "eat", city: "GZ", region: "广州",
+        name: "点都德（天河环贸/花城店·收官早午茶）",
+        lat: 23.1310, lng: 113.3245,
+        desc: "睡到自然醒收拾退房，把行李免费寄存在喜来登礼宾部！下楼散步吃一顿收官广式早茶，把前几天最爱的红米肠、凤爪、虾饺再补炫一遍。",
+        kidTip: "🥟 4岁必点：金莎红米肠、金牌虾饺皇、香芒夹心椰汁糕、艇仔粥。",
+        tags: ["🧳 喜来登免费寄存行李", "🚶 下楼步行即达"],
+        cost: "¥95/人"
       },
       {
-        id: "d7-2", day: "D7", seq: 2, time: "10:15", cat: "play", city: "HK",
-        name: "香港海洋公园·探访全港6只大熊猫（或叮叮车备选）",
-        lat: 22.2486, lng: 114.1742,
-        desc: "金钟站乘南港岛线仅1站4分钟直达！带4岁娃只逛山下平缓的「海滨乐园」不爬山：直奔亚洲动物天地看中央赠港「安安」「可可」与2岁港产龙凤胎「加加」「得得」，再看「海洋奇观」巨幕鲨鱼魔鬼鱼！",
-        kidTip: "🐼 弹性备选：若下午车次较早不想入园，可切换为【中环坐二层叮叮车兜风 + 西九文化区海滨大草坪晒太阳】，松弛感拉满！",
-        tags: ["🐼 全港6只大熊猫同框", "🐠 巨幕水族馆平路好走"],
-        cost: "成人HK$498/小童HK$249"
+        id: "d7-2", day: "D7", seq: 2, time: "11:45", cat: "play", city: "GZ", region: "广州",
+        name: "APM 无人驾驶小火车 ➔ 海心沙 & 广州塔留影",
+        lat: 23.1118, lng: 113.3192,
+        desc: "就在喜来登马路对面「天河南站」坐广州独有的 APM 线无人驾驶地下观光列车，仅3站直达海心沙亚运公园，平视小蛮腰拍一家三口收官大片！",
+        kidTip: "🚆 4岁狂喜彩蛋：带娃站第一节车厢最前面透过大落地玻璃看“自己在开地铁穿隧道”，花¥2收获4岁娃超大快乐！",
+        tags: ["🚆 无人驾驶车头视角", "🗼 小蛮腰全家福机位"],
+        cost: "车票¥2"
       },
       {
-        id: "d7-3", day: "D7", seq: 3, time: "13:30", cat: "eat", city: "HK",
-        name: "靠得住粥面 / 甘牌烧鹅（湾仔/尖沙咀收官午餐）",
-        lat: 22.2778, lng: 114.1752,
-        desc: "米其林必比登推介的鱼汤生滚粥与港式烧味，清鲜暖胃，给7天大湾区美食之旅画上圆满句号。",
-        kidTip: "🍲 4岁必点：鲜甜无刺鱼片玉米粥、爽滑鲜虾云吞面；爸妈再来一杯丝袜奶茶或冻柠茶。",
-        tags: ["🥣 米其林推介鱼汤粥", "🧳 顺路回酒店取行李"],
-        cost: "HK$95/人"
-      },
-      {
-        id: "d7-4", day: "D7", seq: 4, time: "15:30", cat: "transit", city: "HK",
-        name: "香港西九龙站 / 香港机场 温馨返程回家",
-        lat: 22.3049, lng: 114.1668,
-        desc: "提前45~60分钟抵达香港西九龙站办理「一地两检」（站内奇华饼家可买熊猫曲奇礼盒给小朋友路上吃），带着满满一家三口冬日回忆平安回家！",
-        kidTip: "🎁 返程提醒：高铁开车前15分钟开闸、前5分钟停检，预留50分钟过关最从容不慌张。",
-        tags: ["🐼 站内买熊猫曲奇伴手礼", "🏠 预留50分钟一地两检"],
-        cost: "圆满收官"
+        id: "d7-3", day: "D7", seq: 3, time: "13:15", cat: "drink", city: "GZ", region: "广州",
+        name: "天环广场 / 天河城买老广手信 & 阿嬷手作",
+        lat: 23.1322, lng: 113.3242,
+        desc: "回到喜来登楼下逛天环广场花园、喝杯阿嬷手作/喜茶，顺手买广州酒家或莲香楼鸡仔饼、老婆饼、广式腊肠伴手礼，回喜来登取行李从容去机场/高铁站回家！",
+        kidTip: "🧋 圆满收官：给4岁娃点无茶底【水牛乳双皮奶】或鲜榨马蹄甘蔗水；去白云机场打车约45分钟/地铁3号线北延段一线直达！",
+        tags: ["🎁 一站买齐老广手信", "✈️ 3号线直达白云机场"],
+        cost: "圆满回家🏠"
       }
     ];
 
     const CHECKLIST_GROUPS = [
       {
-        title: "🪪 证件与跨境必办（重中之重）",
+        title: "🎤 两场孙燕姿演唱会专属装备（11.29 & 12.4）",
         items: [
-          "大人 + 4岁宝宝本人的【往来港澳通行证】及有效香港签注（检查有效期与剩余次数！）",
-          "一家三口二代身份证原件（若宝宝未办身份证，带上户口本原件/出生证明，长隆与高铁备查）",
-          "在铁路 12306 App 购大人票后，点击订单办理【4岁免费乘车儿童申报】"
+          "【4岁儿童防噪隔音耳罩】（体育场音响分贝高，戴上护耳宝宝更愿意安稳看完全场！）",
+          "强效大容量充电宝 + 荧光棒备用电池 + 轻薄防风外套（晚上户外体育场降温）",
+          "演唱会实名制购票身份证件原件 + 给宝宝准备几包独立包装小零食/小面包"
         ]
       },
       {
-        title: "📱 提前预约锁票（防跑空）",
+        title: "🪪 港澳一日游证件与通关（极重要）",
         items: [
-          "香港迪士尼：买票后务必去香港迪士尼官网/App 提前绑定门票完成【12月4日入园预约】",
-          "深圳妇儿大厦·儿童探索馆：提前 3 天在「深圳妇儿大厦」微信小程序预约 12月1日(周二) 下午场",
-          "手机开通香港漫游流量包（支付宝搜「境外流量」十几块钱免换卡），备约 500 港币现金吃澳牛/坐小轮"
+          "确认一家三口（含4岁宝宝本人）港澳通行证均已办好有效的【香港签注】+【澳门签注】",
+          "12306 买广珠城轨/广深港高铁成人票后，在订单页办理【4岁免费乘车儿童申报】",
+          "过澳门拱北口岸时4岁娃走人工通道，领到的过关小白条妥善夹好，备约300港币/澳币零钱"
         ]
       },
       {
-        title: "👶 4岁宝宝装备与穿衣（14℃~23℃）",
+        title: "👶 4岁宝宝广州/顺德吃玩装备（14℃~23℃）",
         items: [
-          "可一键收折的【轻便婴儿伞车】（长隆、深圳湾、尖沙咀、迪士尼午睡神器和解放爸妈双手利器！）",
-          "「洋葱式」穿搭：纯棉短袖/薄长袖打底 + 卫衣/针织衫 + 轻便防风外套/羽绒马甲（香港商场冷气足必备！）",
-          "多备 1 套贴身换洗汗巾/上衣（深圳儿童探索馆玩水区 & 户外跑跳出汗随时换）"
+          "一键折叠轻便婴儿伞车（长隆、清晖园、威尼斯人、维港午睡与解放双手必备！）",
+          "「洋葱式」穿搭：薄长袖打底 + 卫衣/针织衫 + 轻便防风外套（港澳室内冷气足）",
+          "儿童便携辅食剪刀（剪牛肉丸、叉烧、烧鹅超实用）+ 保温水壶 + 湿巾/退热贴"
         ]
       },
       {
-        title: "🔌 实用小物与应急包",
+        title: "📱 手机出行 App 与网络提前备好",
         items: [
-          "英标三脚转换插头 1~2 个 + 大容量充电宝（香港街电较少且贵，自备充电宝最省心）",
-          "宝宝保温水壶 + 独立包装小零食/果泥 + 儿童便携剪刀（吃牛肉丸、大虾饺剪小块超实用）",
-          "儿童常用退热贴、创可贴、生理盐水湿巾与防蚊贴（岭南公园绿植多，备两片防蚊贴）"
+          "手机装好【百度地图 App】（本游玩地图所有景点与回喜来登按钮均支持一键拉起百度导航）",
+          "支付宝提前开通【香港/澳门境外流量包】（十几元免换卡）+ 领广州/香港乘车码",
+          "长隆刷二代身份证原件入园（宝宝若无身份证请带上户口本原件/清晰照片备查）"
         ]
       }
     ];
 
     // ==========================================
-    // 2. WGS-84 与 GCJ-02 (火星坐标) 精准纠偏算法
+    // 3. WGS-84 ➔ GCJ-02 ➔ BD-09 (百度坐标系) 精准转换
     // ==========================================
+    const X_PI = Math.PI * 3000.0 / 180.0;
     function outOfChina(lat, lon) {
       return lon < 72.004 || lon > 137.8347 || lat < 0.8293 || lat > 55.8271;
     }
@@ -2070,8 +2089,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
     function wgs84ToGcj02(lat, lon) {
       if (outOfChina(lat, lon)) return [lat, lon];
-      const a = 6378245.0;
-      const ee = 0.00669342162296594323;
+      const a = 6378245.0, ee = 0.00669342162296594323;
       let dLat = transformLat(lon - 105.0, lat - 35.0);
       let dLon = transformLon(lon - 105.0, lat - 35.0);
       const radLat = lat / 180.0 * Math.PI;
@@ -2082,50 +2100,73 @@ svg.leaflet-image-layer.leaflet-interactive path {
       dLon = (dLon * 180.0) / (a / sqrtMagic * Math.cos(radLat) * Math.PI);
       return [lat + dLat, lon + dLon];
     }
+    function gcj02ToBd09(lat, lon) {
+      const z = Math.sqrt(lon * lon + lat * lat) + 0.00002 * Math.sin(lat * X_PI);
+      const theta = Math.atan2(lat, lon) + 0.000003 * Math.cos(lon * X_PI);
+      return [z * Math.sin(theta) + 0.006, z * Math.cos(theta) + 0.0065];
+    }
+    function wgs84ToBd09(lat, lon) {
+      const [gLat, gLon] = wgs84ToGcj02(lat, lon);
+      return gcj02ToBd09(gLat, gLon);
+    }
+
+    // 构造百度地图官方免 Key 导航链接（精准 bd09ll 坐标）
+    function getBaiduMarkerUrl(lat, lng, name, content) {
+      const [bdLat, bdLng] = wgs84ToBd09(lat, lng);
+      return `https://api.map.baidu.com/marker?location=${bdLat.toFixed(6)},${bdLng.toFixed(6)}&title=${encodeURIComponent(name)}&content=${encodeURIComponent(content || name)}&output=html&coord_type=bd09ll&src=webapp.trip.gba`;
+    }
+    function getBaiduRouteFromHotelUrl(spot) {
+      const [hLat, hLng] = wgs84ToBd09(HOTEL_BASE.lat, HOTEL_BASE.lng);
+      const [dLat, dLng] = wgs84ToBd09(spot.lat, spot.lng);
+      const isNearbyGz = spot.city === "GZ" || spot.city === "CONCERT" || spot.city === "SD";
+      if (isNearbyGz && spot.id !== "d1-1") {
+        return {
+          label: "🚇 喜来登出发",
+          url: `https://api.map.baidu.com/direction?origin=latlng:${hLat.toFixed(6)},${hLng.toFixed(6)}|name:${encodeURIComponent(HOTEL_BASE.name)}&destination=latlng:${dLat.toFixed(6)},${dLng.toFixed(6)}|name:${encodeURIComponent(spot.name)}&mode=transit&region=${encodeURIComponent(spot.region || "广州")}&output=html&coord_type=bd09ll&src=webapp.trip.gba`
+        };
+      }
+      return {
+        label: "🧭 百度路线",
+        url: `https://api.map.baidu.com/direction?destination=latlng:${dLat.toFixed(6)},${dLng.toFixed(6)}|name:${encodeURIComponent(spot.name)}&mode=transit&region=${encodeURIComponent(spot.region || "广州")}&output=html&coord_type=bd09ll&src=webapp.trip.gba`
+      };
+    }
 
     const CAT_CONFIG = {
       eat:     { label: "去哪吃", emoji: "🥟", color: "#F97316", cls: "cat-eat" },
       drink:   { label: "去哪喝", emoji: "🧋", color: "#D97706", cls: "cat-drink" },
       play:    { label: "去哪玩", emoji: "🎡", color: "#10B981", cls: "cat-play" },
-      stay:    { label: "住哪里", emoji: "🏨", color: "#6366F1", cls: "cat-stay" },
+      concert: { label: "演唱会", emoji: "🎤", color: "#7C3AED", cls: "cat-concert" },
+      stay:    { label: "大本营", emoji: "🏨", color: "#4F46E5", cls: "cat-stay" },
       transit: { label: "怎么走", emoji: "🚄", color: "#0EA5E9", cls: "cat-transit" }
     };
+    const CITY_COLOR = { GZ: "#EA580C", CONCERT: "#7C3AED", SD: "#D97706", MO: "#0D9488", HK: "#DB2777", SZ: "#0284C7", ALL: "#334155" };
 
-    const CITY_COLOR = { GZ: "#EA580C", SZ: "#0284C7", HK: "#DB2777", ALL: "#475569" };
-
-    // 状态管理
     let currentDay = "ALL";
     let currentCat = "ALL";
     let selectedSpotId = null;
-    let mapMode = "amap"; // 'amap' | 'carto' | 'svg'
-    let lMap = null;
-    let tileLayer = null;
-    let markersLayer = null;
-    let routeLayer = null;
-    let markerMap = {};
+    let mapMode = "cn"; // 'cn' | 'intl' | 'svg'
+    let mobileView = "split"; // 'map' | 'split' | 'list'
+    let lMap = null, tileLayer = null, markersLayer = null, routeLayer = null, markerMap = {};
 
-    function getDisplayCoord(spot) {
-      if (mapMode === "amap") {
-        return wgs84ToGcj02(spot.lat, spot.lng);
-      }
-      return [spot.lat, spot.lng];
+    function getDisplayCoord(lat, lng) {
+      return mapMode === "cn" ? wgs84ToGcj02(lat, lng) : [lat, lng];
     }
 
     function getFilteredSpots() {
       return SPOTS.filter(s => {
         const dayOk = currentDay === "ALL" || s.day === currentDay;
         const catOk = currentCat === "ALL" ||
-                      (currentCat === "stay" ? (s.cat === "stay" || s.cat === "transit") : s.cat === currentCat);
+          (currentCat === "play" ? (s.cat === "play" || s.cat === "concert") :
+           currentCat === "stay" ? (s.cat === "stay" || s.cat === "transit") : s.cat === currentCat);
         return dayOk && catOk;
       });
     }
 
     // ==========================================
-    // 3. UI 渲染：顶部日期条 + 左侧时间轴 + 百宝箱
+    // 4. UI 渲染
     // ==========================================
     function renderDayTabs() {
-      const wrap = document.getElementById("day-tabs");
-      wrap.innerHTML = DAYS_META.map(d => {
+      document.getElementById("day-tabs").innerHTML = DAYS_META.map(d => {
         const dotColor = CITY_COLOR[d.city];
         const activeCls = d.id === currentDay ? "active" : "";
         return `
@@ -2142,39 +2183,38 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     function renderSidebar() {
       const meta = DAYS_META.find(d => d.id === currentDay);
-      const hero = document.getElementById("day-hero");
-      hero.innerHTML = `
+      document.getElementById("day-hero").innerHTML = `
         <div class="day-hero-head">
           <span class="city-badge city-${meta.city}">📍 ${meta.cityName}</span>
           <span class="day-weather">${meta.weather}</span>
         </div>
         <h2>${meta.title}</h2>
         <p>${meta.summary}</p>
-        <div class="baby-pace-bar">
-          <span>${meta.babyTip}</span>
-        </div>
+        <div class="baby-pace-bar ${meta.isConcert ? 'concert-bar' : ''}">${meta.babyTip}</div>
       `;
 
       const listEl = document.getElementById("timeline-list");
       const spots = getFilteredSpots();
       if (spots.length === 0) {
-        listEl.innerHTML = `<div style="text-align:center;padding:36px 16px;color:#6B7280;font-size:13px;">当前当天没有该分类点位，点击上方「✨ 全部」查看完整安排～</div>`;
+        listEl.innerHTML = `<div style="text-align:center;padding:34px 16px;color:#6B7280;font-size:13px;">当天暂无该分类安排，点上方「✨ 全部」查看完整行程～</div>`;
         return;
       }
 
-      listEl.innerHTML = spots.map((s) => {
+      listEl.innerHTML = spots.map(s => {
         const cfg = CAT_CONFIG[s.cat];
-        const [gcjLat, gcjLng] = wgs84ToGcj02(s.lat, s.lng);
-        const amapUrl = `https://uri.amap.com/marker?position=${gcjLng.toFixed(6)},${gcjLat.toFixed(6)}&name=${encodeURIComponent(s.name)}&coordinate=gaode&callnative=1`;
-        const appleUrl = `https://maps.apple.com/?ll=${gcjLat.toFixed(6)},${gcjLng.toFixed(6)}&q=${encodeURIComponent(s.name)}`;
-        const dayPrefix = currentDay === "ALL" ? `<span style="font-size:11px;font-weight:800;color:${CITY_COLOR[s.city]};background:#F3F4F6;padding:1px 6px;border-radius:5px;">${s.day}</span>` : "";
+        const bdMarkerUrl = getBaiduMarkerUrl(s.lat, s.lng, s.name, s.desc.slice(0, 48));
+        const routeInfo = getBaiduRouteFromHotelUrl(s);
+        const dayBadge = currentDay === "ALL"
+          ? `<span style="font-size:10.5px;font-weight:800;color:${CITY_COLOR[s.city]};background:#F3F4F6;padding:1px 6px;border-radius:5px;">${s.day}</span>`
+          : "";
 
         return `
-          <article class="spot-card ${selectedSpotId === s.id ? 'selected' : ''}" id="card-${s.id}" onclick="focusSpot('${s.id}')">
+          <article class="spot-card ${s.cat === 'concert' ? 'concert-card' : ''} ${selectedSpotId === s.id ? 'selected' : ''}"
+                   id="card-${s.id}" onclick="focusSpot('${s.id}', false)">
             <div class="spot-top">
               <div class="spot-seq-wrap">
-                <span class="seq-num" style="background:${cfg.color}">${s.seq}</span>
-                ${dayPrefix}
+                <span class="seq-num" style="background:${cfg.color}">${s.cat === 'concert' ? '🎤' : s.seq}</span>
+                ${dayBadge}
                 <span class="spot-time">${s.time}</span>
               </div>
               <span class="cat-tag ${cfg.cls}">${cfg.emoji} ${cfg.label} · ${s.cost}</span>
@@ -2182,68 +2222,55 @@ svg.leaflet-image-layer.leaflet-interactive path {
             <div class="spot-title">${s.name}</div>
             <div class="spot-desc">${s.desc}</div>
             <div class="kid-highlight">${s.kidTip}</div>
-            <div class="spot-meta">
-              <div class="meta-tags">
-                ${s.tags.map(t => `<span class="meta-pill">${t}</span>`).join("")}
-              </div>
-              <div class="nav-links" onclick="event.stopPropagation()">
-                <a class="nav-link" href="${amapUrl}" target="_blank" rel="noopener">📍 高德导航</a>
-                <a class="nav-link" href="${appleUrl}" target="_blank" rel="noopener">🗺️ Apple地图</a>
-              </div>
+            <div class="meta-tags">
+              ${s.tags.map(t => `<span class="meta-pill">${t}</span>`).join("")}
+            </div>
+            <div class="card-nav-row" onclick="event.stopPropagation()">
+              <a class="nav-btn baidu-primary" href="${bdMarkerUrl}" target="_blank" rel="noopener">📍 百度地图</a>
+              <a class="nav-btn baidu-route" href="${routeInfo.url}" target="_blank" rel="noopener">${routeInfo.label}</a>
+              <button class="nav-btn locate-btn" onclick="locateOnMapFromCard('${s.id}')" title="在地图上查看">🎯 定位</button>
             </div>
           </article>
         `;
       }).join("");
     }
 
-    // ==========================================
-    // 4. Leaflet 实景地图渲染与自定义气泡
-    // ==========================================
     function buildPopupHtml(s) {
       const cfg = CAT_CONFIG[s.cat];
-      const [gcjLat, gcjLng] = wgs84ToGcj02(s.lat, s.lng);
-      const amapUrl = `https://uri.amap.com/marker?position=${gcjLng.toFixed(6)},${gcjLat.toFixed(6)}&name=${encodeURIComponent(s.name)}&coordinate=gaode&callnative=1`;
-      const appleUrl = `https://maps.apple.com/?ll=${gcjLat.toFixed(6)},${gcjLng.toFixed(6)}&q=${encodeURIComponent(s.name)}`;
+      const bdMarkerUrl = getBaiduMarkerUrl(s.lat, s.lng, s.name, s.desc.slice(0, 48));
+      const routeInfo = getBaiduRouteFromHotelUrl(s);
       return `
         <div>
           <div class="pop-head">
             <span class="cat-tag ${cfg.cls}">${s.day} · ${s.time} · ${cfg.emoji}${cfg.label}</span>
-            <span style="font-size:11.5px;color:#6B7280;font-weight:700;">${s.cost}</span>
+            <span style="font-size:11px;color:#6B7280;font-weight:700;">${s.cost}</span>
           </div>
           <div class="pop-title">${s.name}</div>
           <div class="pop-desc">${s.desc}</div>
           <div class="pop-kid">${s.kidTip}</div>
           <div class="pop-actions">
-            <a class="pop-btn amap" href="${amapUrl}" target="_blank" rel="noopener">📍 高德地图导航</a>
-            <a class="pop-btn apple" href="${appleUrl}" target="_blank" rel="noopener">🗺️ Apple 地图</a>
+            <a class="pop-btn baidu" href="${bdMarkerUrl}" target="_blank" rel="noopener">📍 百度地图导航</a>
+            <a class="pop-btn route" href="${routeInfo.url}" target="_blank" rel="noopener">${routeInfo.label}</a>
           </div>
         </div>
       `;
     }
 
+    // ==========================================
+    // 5. 地图渲染（内嵌 Leaflet + 离线手绘 SVG 双引擎）
+    // ==========================================
     function applyTileLayer() {
       if (!lMap) return;
       if (tileLayer) lMap.removeLayer(tileLayer);
-
-      if (mapMode === "amap") {
+      if (mapMode === "cn") {
         tileLayer = L.tileLayer(
           "https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}",
-          {
-            subdomains: ["1", "2", "3", "4"],
-            maxZoom: 18,
-            minZoom: 6,
-            attribution: "© 高德地图 GCJ-02 已精准校准"
-          }
+          { subdomains: ["1", "2", "3", "4"], maxZoom: 18, minZoom: 7, attribution: "中文高清底图 · 导航由百度地图驱动" }
         );
       } else {
         tileLayer = L.tileLayer(
           "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-          {
-            subdomains: "abcd",
-            maxZoom: 19,
-            minZoom: 6,
-            attribution: "© OpenStreetMap · CARTO"
-          }
+          { subdomains: "abcd", maxZoom: 19, minZoom: 7, attribution: "© OpenStreetMap · CARTO" }
         );
       }
       tileLayer.addTo(lMap);
@@ -2258,54 +2285,68 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const spots = getFilteredSpots();
       const boundsPts = [];
 
-      // 绘制轨迹线：全景画三城连线+每日微线；单日画当天顺向轨迹
+      // 始终显示金色大本营：广州粤海喜来登酒店
+      const hotelCoord = getDisplayCoord(HOTEL_BASE.lat, HOTEL_BASE.lng);
+      const hotelBdUrl = getBaiduMarkerUrl(HOTEL_BASE.lat, HOTEL_BASE.lng, HOTEL_BASE.name, HOTEL_BASE.address);
+      const hotelIcon = L.divIcon({
+        className: "",
+        html: `
+          <div class="custom-pin-wrap">
+            <div class="pin-bubble hotel-pin">🏨 粤海喜来登</div>
+            <div class="pin-arrow" style="border-top-color:#312E81"></div>
+          </div>
+        `,
+        iconSize: [0, 0], iconAnchor: [0, 0], popupAnchor: [0, -34]
+      });
+      L.marker(hotelCoord, { icon: hotelIcon, zIndexOffset: 900 })
+        .bindPopup(`
+          <div>
+            <div class="pop-head"><span class="cat-tag cat-stay">🏨 全程住宿大本营</span></div>
+            <div class="pop-title">${HOTEL_BASE.name}</div>
+            <div class="pop-desc">${HOTEL_BASE.address}。地铁1/3号线体育西路C口直通，去奥体、长隆、西关、广州东站全都很近！</div>
+            <div class="pop-actions">
+              <a class="pop-btn baidu" href="${hotelBdUrl}" target="_blank" rel="noopener">📍 百度导航回喜来登</a>
+            </div>
+          </div>
+        `).addTo(markersLayer);
+
+      // 绘制轨迹线
       if (currentDay === "ALL" && currentCat === "ALL") {
-        const dayOrder = ["D1", "D2", "D3", "D4", "D5", "D6", "D7"];
-        dayOrder.forEach(dId => {
-          const dSpots = SPOTS.filter(s => s.day === dId);
-          const latlngs = dSpots.map(s => getDisplayCoord(s));
-          const city = dSpots[0].city;
-          L.polyline(latlngs, {
-            color: CITY_COLOR[city],
-            weight: 3,
-            opacity: 0.65,
-            dashArray: "6, 6"
-          }).addTo(routeLayer);
-        });
-        // 跨城高铁弧线示意（广州南 -> 深圳北 -> 香港西九龙）
-        const gzSouth = getDisplayCoord({ lat: 22.9956, lng: 113.2706 });
-        const szNorth = getDisplayCoord({ lat: 22.6095, lng: 114.0182 });
-        const hkWest = getDisplayCoord({ lat: 22.3046, lng: 114.1665 });
-        L.polyline([gzSouth, szNorth, hkWest], {
-          color: "#0EA5E9",
-          weight: 4,
-          opacity: 0.82,
-          dashArray: "10, 8"
-        }).addTo(routeLayer);
+        // 以喜来登大本营为中心的 4 条辐射线（奥体/长隆、顺德、澳门、香港/深圳）
+        const rays = [
+          { pts: [hotelCoord, getDisplayCoord(23.1376, 113.4083)], color: "#7C3AED" },
+          { pts: [hotelCoord, getDisplayCoord(23.0056, 113.3093), getDisplayCoord(22.8384, 113.2502)], color: "#D97706" },
+          { pts: [getDisplayCoord(22.9956, 113.2706), getDisplayCoord(22.2154, 113.5530), getDisplayCoord(22.1486, 113.5613)], color: "#0D9488" },
+          { pts: [hotelCoord, getDisplayCoord(22.5352, 114.0536), getDisplayCoord(22.3046, 114.1665)], color: "#DB2777" }
+        ];
+        rays.forEach(r => L.polyline(r.pts, { color: r.color, weight: 3.2, opacity: 0.72, dashArray: "7, 7" }).addTo(routeLayer));
       } else if (currentDay !== "ALL") {
-        const dayAllSpots = SPOTS.filter(s => s.day === currentDay);
-        if (dayAllSpots.length > 1) {
-          const latlngs = dayAllSpots.map(s => getDisplayCoord(s));
-          const city = dayAllSpots[0].city;
-          L.polyline(latlngs, {
-            color: CITY_COLOR[city],
+        const daySpots = SPOTS.filter(s => s.day === currentDay && s.time !== "顺路彩蛋");
+        const pts = daySpots.map(s => getDisplayCoord(s.lat, s.lng));
+        if (currentDay === "D1" || currentDay === "D2" || currentDay === "D6" || currentDay === "D7") {
+          boundsPts.push(hotelCoord);
+        }
+        if (pts.length > 1) {
+          const dMeta = DAYS_META.find(d => d.id === currentDay);
+          L.polyline(pts, {
+            color: CITY_COLOR[dMeta.city],
             weight: 4,
             opacity: 0.85,
-            dashArray: "8, 7"
+            dashArray: "8, 6"
           }).addTo(routeLayer);
         }
       }
 
-      // 绘制点位气泡
+      // 绘制每日点位气泡（跳过与喜来登大本营完全重合的 d1-1 以防遮挡，改为点击 d1-1 弹喜来登）
       spots.forEach(s => {
-        const coord = getDisplayCoord(s);
+        const coord = getDisplayCoord(s.lat, s.lng);
         boundsPts.push(coord);
         const cfg = CAT_CONFIG[s.cat];
-        const shortName = s.name.split("（")[0].split("·")[0].slice(0, 8);
+        const shortName = s.name.split("（")[0].split("·")[0].split(" ")[0].slice(0, 8);
         const isActive = selectedSpotId === s.id;
         const labelHtml = currentDay === "ALL"
           ? `<span>${cfg.emoji}</span>`
-          : `<span class="pin-seq">${s.seq}</span><span>${cfg.emoji} ${shortName}</span>`;
+          : `<span class="pin-seq">${s.cat === 'concert' ? '🎤' : s.seq}</span><span>${cfg.emoji} ${shortName}</span>`;
 
         const icon = L.divIcon({
           className: "",
@@ -2315,16 +2356,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
               <div class="pin-arrow" style="border-top-color:${cfg.color}"></div>
             </div>
           `,
-          iconSize: [0, 0],
-          iconAnchor: [0, 0],
-          popupAnchor: [0, -34]
+          iconSize: [0, 0], iconAnchor: [0, 0], popupAnchor: [0, -34]
         });
 
-        const marker = L.marker(coord, {
-          icon,
-          zIndexOffset: isActive ? 1000 : (100 - s.seq)
-        });
-        marker.bindPopup(buildPopupHtml(s), { maxWidth: 300 });
+        const marker = L.marker(coord, { icon, zIndexOffset: isActive ? 1100 : (s.cat === "concert" ? 800 : 200 - s.seq) });
+        marker.bindPopup(buildPopupHtml(s), { maxWidth: 290 });
         marker.on("click", () => {
           selectedSpotId = s.id;
           highlightCardInSidebar(s.id);
@@ -2336,127 +2372,100 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       if (shouldFit && boundsPts.length > 0) {
         if (boundsPts.length === 1) {
-          lMap.flyTo(boundsPts[0], 15, { duration: 0.65 });
+          lMap.flyTo(boundsPts[0], 15, { duration: 0.55 });
         } else {
           lMap.flyToBounds(L.latLngBounds(boundsPts), {
-            paddingTopLeft: [48, 52],
-            paddingBottomRight: [48, 56],
+            paddingTopLeft: [36, 46],
+            paddingBottomRight: [36, 42],
             maxZoom: 15,
-            duration: 0.7
+            duration: 0.65
           });
         }
       }
     }
 
-    function updateActivePinClasses() {
-      document.querySelectorAll(".custom-pin-wrap").forEach(el => el.classList.remove("active"));
-      if (selectedSpotId) {
-        const pinEl = document.getElementById(`pin-${selectedSpotId}`);
-        if (pinEl) pinEl.classList.add("active");
-      }
-    }
-
-    function highlightCardInSidebar(spotId) {
-      document.querySelectorAll(".spot-card").forEach(el => el.classList.remove("selected"));
-      const card = document.getElementById(`card-${spotId}`);
-      if (card) {
-        card.classList.add("selected");
-        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    }
-
-    // ==========================================
-    // 5. 纯离线手绘湾区 SVG 矢量导览图引擎（双模式&兜底）
-    // ==========================================
     function renderSvgMap() {
       const container = document.getElementById("svg-map-container");
       const spots = getFilteredSpots();
       const W = 900, H = 640;
 
-      // 计算投影：全景时采用美化的珠江口比例；单日时自适应放大局部街区并防重叠
       let projectFn;
       if (currentDay === "ALL") {
-        // 经度 113.15 ~ 114.26, 纬度 22.18 ~ 23.20
         projectFn = (lat, lng) => {
-          const x = 90 + ((lng - 113.15) / (114.26 - 113.15)) * (W - 180);
-          const y = 65 + ((23.20 - lat) / (23.20 - 22.18)) * (H - 130);
+          const x = 85 + ((lng - 113.12) / (114.26 - 113.12)) * (W - 170);
+          const y = 60 + ((23.22 - lat) / (23.22 - 22.10)) * (H - 120);
           return [x, y];
         };
       } else {
         const daySpots = SPOTS.filter(s => s.day === currentDay);
-        let minLat = Math.min(...daySpots.map(s => s.lat));
-        let maxLat = Math.max(...daySpots.map(s => s.lat));
-        let minLng = Math.min(...daySpots.map(s => s.lng));
-        let maxLng = Math.max(...daySpots.map(s => s.lng));
-        const padLat = Math.max((maxLat - minLat) * 0.28, 0.012);
-        const padLng = Math.max((maxLng - minLng) * 0.28, 0.015);
-        minLat -= padLat; maxLat += padLat;
-        minLng -= padLng; maxLng += padLng;
-        projectFn = (lat, lng) => {
-          const x = 110 + ((lng - minLng) / (maxLng - minLng)) * (W - 220);
-          const y = 90 + ((maxLat - lat) / (maxLat - minLat)) * (H - 180);
-          return [x, y];
-        };
+        let minLat = Math.min(...daySpots.map(s => s.lat)), maxLat = Math.max(...daySpots.map(s => s.lat));
+        let minLng = Math.min(...daySpots.map(s => s.lng)), maxLng = Math.max(...daySpots.map(s => s.lng));
+        const padLat = Math.max((maxLat - minLat) * 0.3, 0.012);
+        const padLng = Math.max((maxLng - minLng) * 0.3, 0.015);
+        minLat -= padLat; maxLat += padLat; minLng -= padLng; maxLng += padLng;
+        projectFn = (lat, lng) => [
+          100 + ((lng - minLng) / (maxLng - minLng)) * (W - 200),
+          85 + ((maxLat - lat) / (maxLat - minLat)) * (H - 170)
+        ];
       }
 
-      // 构建连线
       let linesSvg = "";
       if (currentDay === "ALL") {
         const hubs = [
-          { name: "广州", lat: 23.115, lng: 113.29, color: "#EA580C", sub: "D1-D2 · 2晚" },
-          { name: "深圳", lat: 22.542, lng: 114.00, color: "#0284C7", sub: "D3-D4 · 2晚" },
-          { name: "香港", lat: 22.295, lng: 114.16, color: "#DB2777", sub: "D5-D7 · 2晚" }
+          { name: "广州·喜来登/奥体", lat: 23.132, lng: 113.34, color: "#7C3AED" },
+          { name: "顺德美食之都", lat: 22.838, lng: 113.26, color: "#D97706" },
+          { name: "澳门一日", lat: 22.175, lng: 113.55, color: "#0D9488" },
+          { name: "深圳顺路", lat: 22.535, lng: 114.05, color: "#0284C7" },
+          { name: "香港一日", lat: 22.295, lng: 114.17, color: "#DB2777" }
         ];
-        const pts = hubs.map(h => projectFn(h.lat, h.lng));
-        linesSvg += `<path d="M ${pts[0][0]} ${pts[0][1]} Q ${(pts[0][0]+pts[1][0])/2 + 35} ${(pts[0][1]+pts[1][1])/2 - 20} ${pts[1][0]} ${pts[1][1]} T ${pts[2][0]} ${pts[2][1]}" fill="none" stroke="#0EA5E9" stroke-width="4" stroke-dasharray="10 7" opacity="0.8"/>`;
-        hubs.forEach((h, idx) => {
-          const [hx, hy] = pts[idx];
+        const p = hubs.map(h => projectFn(h.lat, h.lng));
+        linesSvg += `
+          <path d="M ${p[0][0]} ${p[0][1]} L ${p[1][0]} ${p[1][1]} L ${p[2][0]} ${p[2][1]}" fill="none" stroke="#0D9488" stroke-width="3.5" stroke-dasharray="8 6" opacity="0.78"/>
+          <path d="M ${p[0][0]} ${p[0][1]} Q ${(p[0][0]+p[3][0])/2+25} ${(p[0][1]+p[3][1])/2-15} ${p[3][0]} ${p[3][1]} L ${p[4][0]} ${p[4][1]}" fill="none" stroke="#DB2777" stroke-width="3.5" stroke-dasharray="8 6" opacity="0.78"/>
+        `;
+        hubs.forEach((h, i) => {
           linesSvg += `
-            <g transform="translate(${hx}, ${hy})">
-              <circle r="46" fill="${h.color}" opacity="0.10"/>
-              <text y="-54" text-anchor="middle" font-size="16" font-weight="800" fill="${h.color}">${h.name} (${h.sub})</text>
+            <g transform="translate(${p[i][0]}, ${p[i][1]})">
+              <circle r="34" fill="${h.color}" opacity="0.12"/>
+              <text y="-40" text-anchor="middle" font-size="15" font-weight="800" fill="${h.color}">${h.name}</text>
             </g>
           `;
         });
       } else {
-        const dayAll = SPOTS.filter(s => s.day === currentDay);
+        const dayAll = SPOTS.filter(s => s.day === currentDay && s.time !== "顺路彩蛋");
         if (dayAll.length > 1) {
           const dStr = dayAll.map((s, i) => {
             const [x, y] = projectFn(s.lat, s.lng);
             return `${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`;
           }).join(" ");
-          const cColor = CITY_COLOR[dayAll[0].city];
-          linesSvg += `<path d="${dStr}" fill="none" stroke="${cColor}" stroke-width="3.5" stroke-dasharray="8 6" stroke-linecap="round"/>`;
+          const dMeta = DAYS_META.find(d => d.id === currentDay);
+          linesSvg += `<path d="${dStr}" fill="none" stroke="${CITY_COLOR[dMeta.city]}" stroke-width="3.5" stroke-dasharray="8 6" stroke-linecap="round"/>`;
         }
       }
 
-      // 构建节点并做简单防碰撞偏移
       const placed = [];
       const nodesSvg = spots.map(s => {
         let [x, y] = projectFn(s.lat, s.lng);
         for (const p of placed) {
-          const dx = x - p[0], dy = y - p[1];
-          const dist = Math.hypot(dx, dy);
+          const dist = Math.hypot(x - p[0], y - p[1]);
           if (dist < 28) {
-            const angle = placed.length * 1.9;
-            x += Math.cos(angle) * (28 - dist);
-            y += Math.sin(angle) * (28 - dist);
+            const ang = placed.length * 1.9;
+            x += Math.cos(ang) * (28 - dist);
+            y += Math.sin(ang) * (28 - dist);
           }
         }
         placed.push([x, y]);
-
         const cfg = CAT_CONFIG[s.cat];
         const isSel = selectedSpotId === s.id;
-        const shortName = s.name.split("（")[0].split("·")[0].slice(0, 9);
-
+        const shortName = s.name.split("（")[0].split("·")[0].slice(0, 8);
         return `
-          <g style="cursor:pointer" onclick="focusSpot('${s.id}')">
-            ${isSel ? `<circle cx="${x}" cy="${y}" r="22" fill="${cfg.color}" opacity="0.25"><animate attributeName="r" values="16;28;16" dur="1.6s" repeatCount="indefinite"/></circle>` : ""}
+          <g style="cursor:pointer" onclick="focusSpot('${s.id}', false)">
+            ${isSel ? `<circle cx="${x}" cy="${y}" r="22" fill="${cfg.color}" opacity="0.25"/>` : ""}
             <circle cx="${x}" cy="${y}" r="${isSel ? 15 : 12}" fill="${cfg.color}" stroke="#fff" stroke-width="2.5"/>
-            <text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">${s.seq}</text>
+            <text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">${s.cat === 'concert' ? '🎤' : s.seq}</text>
             ${currentDay !== "ALL" || isSel ? `
               <g transform="translate(${x}, ${y - 22})">
-                <rect x="${-(shortName.length * 6.5 + 18)}" y="-13" width="${shortName.length * 13 + 36}" height="22" rx="11" fill="rgba(255,255,255,0.95)" stroke="${cfg.color}" stroke-width="1.2"/>
+                <rect x="${-(shortName.length * 6.5 + 16)}" y="-13" width="${shortName.length * 13 + 32}" height="22" rx="11" fill="rgba(255,255,255,0.95)" stroke="${cfg.color}" stroke-width="1.2"/>
                 <text x="0" y="2" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F2937">${cfg.emoji} ${shortName}</text>
               </g>
             ` : ""}
@@ -2472,13 +2481,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
             </pattern>
           </defs>
           <rect width="${W}" height="${H}" fill="url(#waveGrid)"/>
-          <!-- 珠江口陆地示意轮廓 -->
-          <path d="M 0 0 L 580 0 L 520 210 L 660 320 L 890 360 L 900 0 Z" fill="#F6F3EB" opacity="0.72"/>
-          <path d="M 0 0 L 380 0 L 350 260 L 240 460 L 0 520 Z" fill="#F6F3EB" opacity="0.88"/>
-          <path d="M 520 280 Q 650 260 820 340 L 860 470 Q 720 490 590 420 Z" fill="#F4EFE4" opacity="0.9"/>
-          <ellipse cx="645" cy="515" rx="52" ry="26" fill="#F4EFE4" opacity="0.92"/>
-          <ellipse cx="765" cy="525" rx="60" ry="30" fill="#F4EFE4" opacity="0.92"/>
-          <text x="455" y="420" font-size="14" font-weight="700" fill="#6497B1" letter-spacing="4" opacity="0.75">珠江口 · 伶仃洋</text>
+          <path d="M 0 0 L 560 0 L 500 220 L 660 330 L 900 370 L 900 0 Z" fill="#F6F3EB" opacity="0.76"/>
+          <path d="M 0 0 L 380 0 L 350 300 L 420 560 L 0 600 Z" fill="#F6F3EB" opacity="0.88"/>
+          <path d="M 550 280 Q 680 270 840 350 L 870 490 Q 720 500 610 430 Z" fill="#F4EFE4" opacity="0.9"/>
+          <text x="485" y="455" font-size="14" font-weight="700" fill="#6497B1" letter-spacing="4" opacity="0.72">珠江口 · 伶仃洋</text>
           ${linesSvg}
           ${nodesSvg}
         </svg>
@@ -2486,61 +2492,91 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
 
     // ==========================================
-    // 6. 交互动作函数
+    // 6. 交互逻辑（含手机端三档视图切换）
     // ==========================================
+    function setMobileView(mode) {
+      mobileView = mode;
+      const stage = document.getElementById("main-stage");
+      stage.classList.remove("mode-map", "mode-split", "mode-list");
+      stage.classList.add("mode-" + mode);
+      document.getElementById("dock-map").classList.toggle("active", mode === "map");
+      document.getElementById("dock-split").classList.toggle("active", mode === "split");
+      document.getElementById("dock-list").classList.toggle("active", mode === "list");
+      setTimeout(() => {
+        if (lMap && mapMode !== "svg") {
+          lMap.invalidateSize();
+          if (mode !== "list") fitCurrentView();
+        }
+      }, 310);
+    }
+
+    function locateOnMapFromCard(spotId) {
+      if (window.innerWidth <= 860 && mobileView === "list") {
+        setMobileView("split");
+        setTimeout(() => focusSpot(spotId, true), 330);
+      } else {
+        focusSpot(spotId, true);
+      }
+    }
+
     function selectDay(dayId) {
       currentDay = dayId;
       selectedSpotId = null;
       renderDayTabs();
       renderSidebar();
-      if (mapMode === "svg") {
-        renderSvgMap();
-      } else {
-        renderLeafletMarkers(true);
-      }
+      document.getElementById("timeline-list").scrollTop = 0;
+      if (mapMode === "svg") renderSvgMap();
+      else renderLeafletMarkers(true);
     }
 
     function setCategory(cat) {
       currentCat = cat;
-      document.querySelectorAll(".cat-chip").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.cat === cat);
-      });
+      document.querySelectorAll(".cat-chip").forEach(btn => btn.classList.toggle("active", btn.dataset.cat === cat));
       renderSidebar();
-      if (mapMode === "svg") {
-        renderSvgMap();
-      } else {
-        renderLeafletMarkers(true);
-      }
+      if (mapMode === "svg") renderSvgMap();
+      else renderLeafletMarkers(true);
     }
 
-    function focusSpot(spotId) {
+    function focusSpot(spotId, forceZoom = false) {
       const spot = SPOTS.find(s => s.id === spotId);
       if (!spot) return;
       selectedSpotId = spotId;
       highlightCardInSidebar(spotId);
-
       if (mapMode === "svg") {
         renderSvgMap();
       } else if (lMap && markerMap[spotId]) {
-        const coord = getDisplayCoord(spot);
-        lMap.flyTo(coord, Math.max(lMap.getZoom(), 15), { duration: 0.55 });
+        const coord = getDisplayCoord(spot.lat, spot.lng);
+        lMap.flyTo(coord, forceZoom ? 15 : Math.max(lMap.getZoom(), 14), { duration: 0.5 });
         markerMap[spotId].openPopup();
         updateActivePinClasses();
       }
     }
 
-    function switchMapMode(mode) {
-      if (mode !== "svg" && !window.L) {
-        mode = "svg";
+    function highlightCardInSidebar(spotId) {
+      document.querySelectorAll(".spot-card").forEach(el => el.classList.remove("selected"));
+      const card = document.getElementById(`card-${spotId}`);
+      if (card) {
+        card.classList.add("selected");
+        card.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
-      mapMode = mode;
-      document.getElementById("btn-layer-amap").classList.toggle("active", mode === "amap");
-      document.getElementById("btn-layer-carto").classList.toggle("active", mode === "carto");
-      document.getElementById("btn-layer-svg").classList.toggle("active", mode === "svg");
+    }
 
+    function updateActivePinClasses() {
+      document.querySelectorAll(".custom-pin-wrap").forEach(el => el.classList.remove("active"));
+      if (selectedSpotId) {
+        const pinEl = document.getElementById(`pin-${selectedSpotId}`);
+        if (pinEl) pinEl.classList.add("active");
+      }
+    }
+
+    function switchMapMode(mode) {
+      if (mode !== "svg" && !window.L) mode = "svg";
+      mapMode = mode;
+      document.getElementById("btn-layer-cn").classList.toggle("active", mode === "cn");
+      document.getElementById("btn-layer-intl").classList.toggle("active", mode === "intl");
+      document.getElementById("btn-layer-svg").classList.toggle("active", mode === "svg");
       const lEl = document.getElementById("leaflet-map");
       const sEl = document.getElementById("svg-map-container");
-
       if (mode === "svg") {
         lEl.style.display = "none";
         sEl.style.display = "block";
@@ -2557,68 +2593,47 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
 
     function fitCurrentView() {
-      if (mapMode === "svg") {
-        renderSvgMap();
-      } else {
-        renderLeafletMarkers(true);
-      }
+      if (mapMode === "svg") renderSvgMap();
+      else renderLeafletMarkers(true);
     }
 
-    // ==========================================
-    // 7. 行前百宝箱 Checklist (支持本地持久化)
-    // ==========================================
-    const STORAGE_KEY = "gz_sz_hk_4yo_checklist_v1";
+    // Checklist 本地持久化
+    const STORAGE_KEY = "gz_sd_hkmo_sunyanzi_v3";
     function getSavedChecks() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      } catch (e) {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) { return {}; }
     }
     function renderChecklist() {
       const saved = getSavedChecks();
-      let total = 0, checkedCount = 0;
-      const body = document.getElementById("checklist-body");
-      body.innerHTML = CHECKLIST_GROUPS.map((g, gi) => {
-        const itemsHtml = g.items.map((txt, ii) => {
-          const key = `g${gi}_${ii}`;
+      let total = 0, done = 0;
+      document.getElementById("checklist-body").innerHTML = CHECKLIST_GROUPS.map((g, gi) => {
+        const rows = g.items.map((txt, ii) => {
+          const k = `g${gi}_${ii}`;
           total++;
-          const isDone = !!saved[key];
-          if (isDone) checkedCount++;
+          const ok = !!saved[k];
+          if (ok) done++;
           return `
-            <label class="check-item ${isDone ? 'done' : ''}">
-              <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleCheckItem('${key}', this.checked)" />
+            <label class="check-item ${ok ? 'done' : ''}">
+              <input type="checkbox" ${ok ? 'checked' : ''} onchange="toggleCheckItem('${k}', this.checked)" />
               <span>${txt}</span>
             </label>
           `;
         }).join("");
-        return `<div class="guide-box"><h4>${g.title}</h4>${itemsHtml}</div>`;
+        return `<div class="guide-box"><h4>${g.title}</h4>${rows}</div>`;
       }).join("");
-      document.getElementById("check-progress").textContent = `(${checkedCount}/${total})`;
+      document.getElementById("check-progress").textContent = `(${done}/${total})`;
     }
-    function toggleCheckItem(key, val) {
-      const saved = getSavedChecks();
-      saved[key] = val;
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch (e) {}
+    function toggleCheckItem(k, v) {
+      const s = getSavedChecks(); s[k] = v;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
       renderChecklist();
     }
     function toggleChecklistModal(open) {
       document.getElementById("checklist-modal").classList.toggle("open", open);
     }
 
-    // ==========================================
-    // 8. 启动加载逻辑（带 Leaflet 多源自动容灾）
-    // ==========================================
     function initLeafletMap() {
-      if (!window.L) {
-        switchMapMode("svg");
-        return;
-      }
-      lMap = L.map("leaflet-map", {
-        center: [22.68, 113.78],
-        zoom: 9,
-        zoomControl: false
-      });
+      if (!window.L) { switchMapMode("svg"); return; }
+      lMap = L.map("leaflet-map", { center: [22.72, 113.65], zoom: 9, zoomControl: false });
       L.control.zoom({ position: "bottomright" }).addTo(lMap);
       routeLayer = L.layerGroup().addTo(lMap);
       markersLayer = L.layerGroup().addTo(lMap);
@@ -2626,15 +2641,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
       renderLeafletMarkers(true);
     }
 
-    function bootApp() {
+    window.addEventListener("DOMContentLoaded", () => {
+      // 绑定顶栏「一键百度导航回喜来登」
+      document.getElementById("btn-back-hotel").href = getBaiduMarkerUrl(HOTEL_BASE.lat, HOTEL_BASE.lng, HOTEL_BASE.name, HOTEL_BASE.address);
       renderDayTabs();
       renderSidebar();
       renderChecklist();
-
       initLeafletMap();
-    }
-
-    window.addEventListener("DOMContentLoaded", bootApp);
+    });
   </script>
 </body>
 </html>
